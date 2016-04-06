@@ -62,12 +62,22 @@ namespace COMP4932_Assignment3
             }
         }
 
+        /// <summary>
+        /// Grayscales an image.
+        /// </summary>
+        /// <param name="i">Image to grayscale</param>
+        /// <returns>Grayscaled image</returns>
         Bitmap grayscaleImage(Bitmap i)
         {
             Bitmap g = RGBChanger.RGBtoYCbCr(i, ref dataObj);
             return g;
         }
 
+        /// <summary>
+        /// Grayscales the two images saved in the Data Object.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dataObj.setGrayscale1(grayscaleImage(dataObj.getImage1()));

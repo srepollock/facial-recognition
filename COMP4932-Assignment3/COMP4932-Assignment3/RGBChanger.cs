@@ -10,15 +10,6 @@ namespace COMP4932_Assignment3
 {
     public static class RGBChanger
     {
-        /* 
-            Takes in an array of data that is the image RGB data
-            Then converts it to YCbCr data
-            Then returns the YCbCr data
-
-            Needs to take in the data of the image
-
-            returns the new bitmap
-        */
         /// <summary>
         /// Changes RGB to YCbCr and saves the data into the Data object.
         /// </summary>
@@ -33,14 +24,12 @@ namespace COMP4932_Assignment3
         public static Bitmap RGBtoYCbCr(Bitmap orgBmp, ref Data dataObj)
         {
             Bitmap bmp = orgBmp;
-
             int width = bmp.Width;
             int height = bmp.Height;
             int[,] yData = new int[width, height];                     //luma
             byte[,] CbData = new byte[width, height];                     //Cb
             byte[,] CrData = new byte[width, height];                     //Cr
             Color[,] YCbCrData = new Color[width, height];
-
             unsafe
             {
                 BitmapData bitmapData = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, bmp.PixelFormat);
@@ -155,7 +144,8 @@ namespace COMP4932_Assignment3
                 dataObj.setYCrCbData2(YCbCrData);
             }
         }
-
+        */
+        /*
         /// <summary>
         /// Changes YCbCr data back into RGB data and saves it to the Data
         /// object.
