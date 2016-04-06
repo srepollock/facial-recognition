@@ -9,19 +9,16 @@ namespace COMP4932_Assignment3
 {
     public class Data
     {
-        Bitmap image1, image2;
-        Bitmap grayscale1, grayscale2;
+        public List<Bitmap> images = new List<Bitmap>();
+        public List<Bitmap> grayscales = new List<Bitmap>();
+        public List<Bitmap> diffs = new List<Bitmap>();
+        public int threshold = 50;
 
-        // 1
-        public Bitmap getImage1() { return image1; }
-        public Bitmap getGrayscale1() { return grayscale1; }
-        public void setImage1(Bitmap i) { image1 = i; }
-        public void setGrayscale1(Bitmap i) { grayscale1 = i; }
-
-        // 2
-        public Bitmap getImage2() { return image2; }
-        public Bitmap getGrayscale2() { return grayscale2; }
-        public void setImage2(Bitmap i) { image2 = i; }
-        public void setGrayscale2(Bitmap i) { grayscale2 = i; }
+        // GIF stuff
+        public Bitmap[] gifarray;
+        public Bitmap[] gifgrayarray;
+        public Bitmap[] gifdiffsarray;
+        public int curgimage = 0;
+        public int curdimage = 0;
     }
 }
