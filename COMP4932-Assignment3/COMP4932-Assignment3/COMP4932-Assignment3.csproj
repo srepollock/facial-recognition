@@ -34,6 +34,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ILNumerics.Computing, Version=4.8.0.0, Culture=neutral, PublicKeyToken=8d9bf50ef854734d, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Computing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.Core, Version=4.8.0.0, Culture=neutral, PublicKeyToken=9651adc37f12bb00, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.Drawing, Version=4.8.0.0, Culture=neutral, PublicKeyToken=e22c8a010c3b081a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Drawing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.IO.HDF5, Version=4.8.0.0, Culture=neutral, PublicKeyToken=85055996c33d20cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.IO.HDF5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.Toolboxes.MachineLearning, Version=4.8.0.0, Culture=neutral, PublicKeyToken=630a0f4f2119eebc, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Toolboxes.MachineLearning.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.Toolboxes.Optimization, Version=4.8.0.0, Culture=neutral, PublicKeyToken=d11317283e0d33b5, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Toolboxes.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILNumerics.Toolboxes.Statistics, Version=4.8.0.0, Culture=neutral, PublicKeyToken=176aaed3d023b64c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\ILNumerics.Toolboxes.Statistics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\OpenTK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILNumerics.4.8.0.0\lib\OpenTK.GLControl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,13 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.cs" />
+    <Compile Include="EigenObject.cs" />
     <Compile Include="FaceRecognition.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FaceRecognition.Designer.cs">
       <DependentUpon>FaceRecognition.cs</DependentUpon>
     </Compile>
-    <Compile Include="Haar.cs" />
+    <Compile Include="ImageTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageChanger.cs" />
@@ -70,6 +107,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,6 +120,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin32\libiomp5md.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin32\mkl_custom.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin64\libiomp5md.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin64\mkl_custom.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
