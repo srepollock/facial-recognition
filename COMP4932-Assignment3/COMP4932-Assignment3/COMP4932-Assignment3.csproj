@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="EigenObject.cs" />
+    <Compile Include="FaceFinder.cs" />
     <Compile Include="FaceRecognition.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,7 +95,6 @@
     <Compile Include="ImageTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImageChanger.cs" />
     <EmbeddedResource Include="FaceRecognition.resx">
       <DependentUpon>FaceRecognition.cs</DependentUpon>
     </EmbeddedResource>

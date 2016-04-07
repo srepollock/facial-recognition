@@ -7,7 +7,7 @@ using ILNumerics;
 
 namespace COMP4932_Assignment3
 {
-    class EigenObject
+    public class EigenObject
     {
         public complex[] Values { get; set; }
         public complex[,] Vectors { get; set; }

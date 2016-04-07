@@ -163,35 +163,8 @@ namespace COMP4932_Assignment3
         /// <returns>Grayscaled image</returns>
         Bitmap grayscaleImage(Bitmap i)
         {
-            Bitmap g = ImageChanger.RGBtoGrayscale(i);
+            Bitmap g = ImageTool.grayscale(i);
             return g;
-        }
-
-        /// <summary>
-        /// Gets the differences of between the frams at frame i and i+1
-        /// </summary>
-        /// <param name="i">Index where to grab the frames</param>
-        /// <returns>Bitmap of the differences</returns>
-        Bitmap getDifference(int i)
-        {
-            Bitmap f = dataObj.grayscales.ElementAt(i);
-            Bitmap l;
-            if(i + 1 >= dataObj.grayscales.Count) l = dataObj.grayscales.ElementAt(0); // Next image
-            else l = dataObj.grayscales.ElementAt(i + 1); // Next image
-            if(f.Width != l.Width) { MessageBox.Show("Images must be the same width!"); return null; }
-            Bitmap diff = new Bitmap(f.Width, f.Height);
-            for(int x = 0; x < f.Width; x++)
-            {
-                for(int y = 0; y < f.Height; y++)
-                {
-                    int fp = (int)f.GetPixel(x, y).R;
-                    int lp = (int)l.GetPixel(x, y).R;
-                    int dp = fp - lp; // Get pixel, minus first from last
-                    if (dp < dataObj.threshold) dp = 0; // Threshold
-                    diff.SetPixel(x, y, Color.FromArgb(255, dp, dp, dp));
-                }
-            }
-            return diff;
         }
 
         /// <summary>
@@ -269,7 +242,7 @@ namespace COMP4932_Assignment3
         /// <param name="e"></param>
         private void jPEGToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            dataObj.diffs.Add(getDifference(0));
+            dataObj.diffs.Add(ImageTool.getDifference(0, ref dataObj));
             pictureBox3.Image = dataObj.diffs.ElementAt(0);
         }
 
@@ -282,7 +255,7 @@ namespace COMP4932_Assignment3
         {
             for(int i = 0; i < dataObj.images.Count; i++)
             {
-                dataObj.diffs.Add(getDifference(i));
+                dataObj.diffs.Add(ImageTool.getDifference(i, ref dataObj));
             }
             dataObj.setupGifDiffArray();
             diffTicker.Start();
