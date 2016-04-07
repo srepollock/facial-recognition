@@ -32,6 +32,12 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jPEGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIFToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.differenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jPEGToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIFToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -43,12 +49,18 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tab3 = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.differenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jPEGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gIFToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.jPEGToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.gIFToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.motionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.findFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bruteForceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optimizedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.motionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.jPEGToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jPEGToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIFToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.jPEGToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gIFToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -65,6 +77,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.imageToolStripMenuItem,
+            this.findFaceToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -91,11 +104,64 @@
             // imageToolStripMenuItem
             // 
             this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.motionToolStripMenuItem,
             this.grayscaleToolStripMenuItem,
-            this.differenceToolStripMenuItem});
+            this.differenceToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.imageToolStripMenuItem.Text = "Image";
+            // 
+            // grayscaleToolStripMenuItem
+            // 
+            this.grayscaleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jPEGToolStripMenuItem,
+            this.gIFToolStripMenuItem1});
+            this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.grayscaleToolStripMenuItem.Text = "Grayscale";
+            // 
+            // jPEGToolStripMenuItem
+            // 
+            this.jPEGToolStripMenuItem.Enabled = false;
+            this.jPEGToolStripMenuItem.Name = "jPEGToolStripMenuItem";
+            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.jPEGToolStripMenuItem.Text = "JPEG";
+            this.jPEGToolStripMenuItem.Click += new System.EventHandler(this.jPEGToolStripMenuItem_Click);
+            // 
+            // gIFToolStripMenuItem1
+            // 
+            this.gIFToolStripMenuItem1.Enabled = false;
+            this.gIFToolStripMenuItem1.Name = "gIFToolStripMenuItem1";
+            this.gIFToolStripMenuItem1.Size = new System.Drawing.Size(99, 22);
+            this.gIFToolStripMenuItem1.Text = "GIF";
+            this.gIFToolStripMenuItem1.Click += new System.EventHandler(this.gIFToolStripMenuItem1_Click);
+            // 
+            // differenceToolStripMenuItem
+            // 
+            this.differenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jPEGToolStripMenuItem1,
+            this.gIFToolStripMenuItem2});
+            this.differenceToolStripMenuItem.Name = "differenceToolStripMenuItem";
+            this.differenceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.differenceToolStripMenuItem.Text = "Difference";
+            this.differenceToolStripMenuItem.Click += new System.EventHandler(this.differenceToolStripMenuItem_Click);
+            // 
+            // jPEGToolStripMenuItem1
+            // 
+            this.jPEGToolStripMenuItem1.Enabled = false;
+            this.jPEGToolStripMenuItem1.Name = "jPEGToolStripMenuItem1";
+            this.jPEGToolStripMenuItem1.Size = new System.Drawing.Size(99, 22);
+            this.jPEGToolStripMenuItem1.Text = "JPEG";
+            this.jPEGToolStripMenuItem1.Click += new System.EventHandler(this.jPEGToolStripMenuItem1_Click);
+            // 
+            // gIFToolStripMenuItem2
+            // 
+            this.gIFToolStripMenuItem2.Enabled = false;
+            this.gIFToolStripMenuItem2.Name = "gIFToolStripMenuItem2";
+            this.gIFToolStripMenuItem2.Size = new System.Drawing.Size(99, 22);
+            this.gIFToolStripMenuItem2.Text = "GIF";
+            this.gIFToolStripMenuItem2.Click += new System.EventHandler(this.gIFToolStripMenuItem2_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -210,58 +276,93 @@
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
             // 
-            // differenceToolStripMenuItem
+            // motionToolStripMenuItem
             // 
-            this.differenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.jPEGToolStripMenuItem1,
-            this.gIFToolStripMenuItem2});
-            this.differenceToolStripMenuItem.Name = "differenceToolStripMenuItem";
-            this.differenceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.differenceToolStripMenuItem.Text = "Difference";
-            this.differenceToolStripMenuItem.Click += new System.EventHandler(this.differenceToolStripMenuItem_Click);
+            this.motionToolStripMenuItem.Enabled = false;
+            this.motionToolStripMenuItem.Name = "motionToolStripMenuItem";
+            this.motionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.motionToolStripMenuItem.Text = "Motion";
             // 
-            // grayscaleToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            this.grayscaleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.jPEGToolStripMenuItem,
-            this.gIFToolStripMenuItem1});
-            this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.grayscaleToolStripMenuItem.Text = "Grayscale";
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
-            // jPEGToolStripMenuItem
+            // findFaceToolStripMenuItem
             // 
-            this.jPEGToolStripMenuItem.Enabled = false;
-            this.jPEGToolStripMenuItem.Name = "jPEGToolStripMenuItem";
-            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.jPEGToolStripMenuItem.Text = "JPEG";
-            this.jPEGToolStripMenuItem.Click += new System.EventHandler(this.jPEGToolStripMenuItem_Click);
+            this.findFaceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bruteForceToolStripMenuItem,
+            this.optimizedToolStripMenuItem,
+            this.motionToolStripMenuItem1});
+            this.findFaceToolStripMenuItem.Enabled = false;
+            this.findFaceToolStripMenuItem.Name = "findFaceToolStripMenuItem";
+            this.findFaceToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.findFaceToolStripMenuItem.Text = "Find Face";
             // 
-            // gIFToolStripMenuItem1
+            // bruteForceToolStripMenuItem
             // 
-            this.gIFToolStripMenuItem1.Enabled = false;
-            this.gIFToolStripMenuItem1.Name = "gIFToolStripMenuItem1";
-            this.gIFToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.gIFToolStripMenuItem1.Text = "GIF";
-            this.gIFToolStripMenuItem1.Click += new System.EventHandler(this.gIFToolStripMenuItem1_Click);
+            this.bruteForceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jPEGToolStripMenuItem2,
+            this.gIFToolStripMenuItem});
+            this.bruteForceToolStripMenuItem.Name = "bruteForceToolStripMenuItem";
+            this.bruteForceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bruteForceToolStripMenuItem.Text = "Brute Force";
             // 
-            // jPEGToolStripMenuItem1
+            // optimizedToolStripMenuItem
             // 
-            this.jPEGToolStripMenuItem1.Enabled = false;
-            this.jPEGToolStripMenuItem1.Name = "jPEGToolStripMenuItem1";
-            this.jPEGToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.jPEGToolStripMenuItem1.Text = "JPEG";
-            this.jPEGToolStripMenuItem1.Click += new System.EventHandler(this.jPEGToolStripMenuItem1_Click);
+            this.optimizedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jPEGToolStripMenuItem3,
+            this.gIFToolStripMenuItem3});
+            this.optimizedToolStripMenuItem.Name = "optimizedToolStripMenuItem";
+            this.optimizedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optimizedToolStripMenuItem.Text = "Optimized";
             // 
-            // gIFToolStripMenuItem2
+            // motionToolStripMenuItem1
             // 
-            this.gIFToolStripMenuItem2.Enabled = false;
-            this.gIFToolStripMenuItem2.Name = "gIFToolStripMenuItem2";
-            this.gIFToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.gIFToolStripMenuItem2.Text = "GIF";
-            this.gIFToolStripMenuItem2.Click += new System.EventHandler(this.gIFToolStripMenuItem2_Click);
+            this.motionToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jPEGToolStripMenuItem4,
+            this.gIFToolStripMenuItem4});
+            this.motionToolStripMenuItem1.Name = "motionToolStripMenuItem1";
+            this.motionToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.motionToolStripMenuItem1.Text = "Motion";
             // 
-            // Form1
+            // jPEGToolStripMenuItem2
+            // 
+            this.jPEGToolStripMenuItem2.Name = "jPEGToolStripMenuItem2";
+            this.jPEGToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.jPEGToolStripMenuItem2.Text = "JPEG";
+            // 
+            // gIFToolStripMenuItem
+            // 
+            this.gIFToolStripMenuItem.Name = "gIFToolStripMenuItem";
+            this.gIFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gIFToolStripMenuItem.Text = "GIF";
+            // 
+            // jPEGToolStripMenuItem3
+            // 
+            this.jPEGToolStripMenuItem3.Name = "jPEGToolStripMenuItem3";
+            this.jPEGToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.jPEGToolStripMenuItem3.Text = "JPEG";
+            // 
+            // gIFToolStripMenuItem3
+            // 
+            this.gIFToolStripMenuItem3.Name = "gIFToolStripMenuItem3";
+            this.gIFToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.gIFToolStripMenuItem3.Text = "GIF";
+            // 
+            // jPEGToolStripMenuItem4
+            // 
+            this.jPEGToolStripMenuItem4.Name = "jPEGToolStripMenuItem4";
+            this.jPEGToolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.jPEGToolStripMenuItem4.Text = "JPEG";
+            // 
+            // gIFToolStripMenuItem4
+            // 
+            this.gIFToolStripMenuItem4.Name = "gIFToolStripMenuItem4";
+            this.gIFToolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.gIFToolStripMenuItem4.Text = "GIF";
+            // 
+            // FaceRecognition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -269,8 +370,8 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FaceRecognition";
+            this.Text = "Facial Recognition - Spencer Pollock";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -309,6 +410,18 @@
         private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem jPEGToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem motionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem findFaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bruteForceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optimizedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem motionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem jPEGToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jPEGToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem jPEGToolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem4;
     }
 }
 

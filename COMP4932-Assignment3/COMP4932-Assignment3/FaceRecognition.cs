@@ -44,7 +44,17 @@ namespace COMP4932_Assignment3
             
         }
 
-        // TODO Clean this up
+        /// <summary>
+        /// Basic function calls called on program startup, or reopening.
+        /// </summary>
+        void startup()
+        {
+            dataObj = new Data();
+            disableButtons();
+            stopTickers();
+            clearBoxes();
+        }
+
         /// <summary>
         /// Open a file.
         /// </summary>
@@ -52,10 +62,7 @@ namespace COMP4932_Assignment3
         /// <param name="e"></param>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataObj = new Data();
-            disableButtons();
-            stopTickers();
-            clearBoxes();
+            startup();
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "GIF Files|*.gif|JPG Files|*.jpg|PNG Files|*.png|BMP Files|*.bmp|All Files|*.*";
             DialogResult result = openFileDialog1.ShowDialog(); // I want to open this to the child window in the file
@@ -87,10 +94,9 @@ namespace COMP4932_Assignment3
                 }
                 else
                 {
-                    // gif
                     getFrames(openFileDialog1.FileName);
                     pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
-                    gIFToolStripMenuItem1.Enabled = true;
+                    gIFToolStripMenuItem1.Enabled = true; // Enables GIF Grayscale
                 }
             }
         }
@@ -104,6 +110,31 @@ namespace COMP4932_Assignment3
             jPEGToolStripMenuItem1.Enabled = false;
             gIFToolStripMenuItem1.Enabled = false;
             gIFToolStripMenuItem2.Enabled = false;
+            findFaceToolStripMenuItem.Enabled = false;
+            faceFinderToolstripGIF(false);
+            faceFinderToolstripJPEG(false);
+        }
+
+        /// <summary>
+        /// Turns on face finder buttons for jpeg images.
+        /// </summary>
+        /// <param name="b">True/False</param>
+        void faceFinderToolstripJPEG(Boolean b)
+        {
+            jPEGToolStripMenuItem2.Enabled = b;
+            jPEGToolStripMenuItem3.Enabled = b;
+            jPEGToolStripMenuItem4.Enabled = b;
+        }
+
+        /// <summary>
+        /// Turns on face finder buttons for gif images.
+        /// </summary>
+        /// <param name="b">True/False</param>
+        void faceFinderToolstripGIF(Boolean b)
+        {
+            gIFToolStripMenuItem.Enabled = b;
+            gIFToolStripMenuItem3.Enabled = b;
+            gIFToolStripMenuItem4.Enabled = b;
         }
 
         /// <summary>
@@ -115,6 +146,9 @@ namespace COMP4932_Assignment3
             diffTicker.Stop();
         }
 
+        /// <summary>
+        /// Sets the picture boxes to null.
+        /// </summary>
         void clearBoxes()
         {
             pictureBox1.Image = null;
@@ -175,10 +209,22 @@ namespace COMP4932_Assignment3
                 dataObj.images.Add((Bitmap)gif.Clone()); // Adds the image to the list
             }
         }
+        
+        /// <summary>
+        /// Doesn't do anything.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
         }
+        
+        /// <summary>
+        /// Doesn't do anything.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void differenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
@@ -196,6 +242,8 @@ namespace COMP4932_Assignment3
             dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(1)));
             pictureBox2.Image = (Image)dataObj.grayscales.ElementAt(1);
             jPEGToolStripMenuItem1.Enabled = true; // Diff JPEG
+            findFaceToolStripMenuItem.Enabled = true; // Enables Face Finder
+            faceFinderToolstripJPEG(true);
         }
 
         /// <summary>
@@ -209,7 +257,7 @@ namespace COMP4932_Assignment3
             {
                 dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(i)));
             }
-            setupGifGrayArray();
+            dataObj.setupGifGrayArray();
             grayTicker.Start();
             gIFToolStripMenuItem2.Enabled = true; // Diff GIF
         }
@@ -236,48 +284,10 @@ namespace COMP4932_Assignment3
             {
                 dataObj.diffs.Add(getDifference(i));
             }
-            setupGifDiffArray();
+            dataObj.setupGifDiffArray();
             diffTicker.Start();
-        }
-
-        // TODO Cleanup these functions. Do this in data?
-        /// <summary>
-        /// Puts the images into an array.
-        /// </summary>
-        void setupGifImageArray()
-        {
-            int size = dataObj.images.Count;
-            dataObj.gifarray = new Bitmap[size];
-            for(int i = 0; i < size; i++)
-            {
-                dataObj.gifarray[i] = dataObj.images.ElementAt(i);
-            }
-        }
-
-        /// <summary>
-        /// Puts the grayscale into an array.
-        /// </summary>
-        void setupGifGrayArray()
-        {
-            int size = dataObj.grayscales.Count;
-            dataObj.gifgrayarray = new Bitmap[size];
-            for (int i = 0; i < size; i++)
-            {
-                dataObj.gifgrayarray[i] = dataObj.grayscales.ElementAt(i);
-            }
-        }
-
-        /// <summary>
-        /// Puts the diff into an array.
-        /// </summary>
-        void setupGifDiffArray()
-        {
-            int size = dataObj.diffs.Count;
-            dataObj.gifdiffsarray = new Bitmap[size];
-            for (int i = 0; i < size; i++)
-            {
-                dataObj.gifdiffsarray[i] = dataObj.diffs.ElementAt(i);
-            }
+            findFaceToolStripMenuItem.Enabled = true; // Enables Face Finder
+            faceFinderToolstripGIF(true);
         }
 
         /// <summary>
