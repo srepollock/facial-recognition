@@ -47,6 +47,7 @@ namespace COMP4932_Assignment3
             grayTicker.Tick += new System.EventHandler(gifGrayPlay);
             diffTicker.Tick += new System.EventHandler(gifDiffPlay);
             mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
+            pictureBox1.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
             ImageTool.SetImage(mainBmp, img);
             int libCount = LoadLibrary("./imgLib", mainBmp.Width, mainBmp.Height, FACES_PER_PERSON); // Loads the library with images that are the same size as the main bitmap
