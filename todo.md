@@ -5,6 +5,7 @@
     - See notes in notebook on how to implement
         - Comment the shit outta this part
     - Basically search each point and try to find a space
+    - Ask Tyler & Dimitry for some help
 - Optimize face space: **(10%)**
     - thread?
     - searching?
@@ -13,6 +14,7 @@
     - Find the face based on the "blob"
         - see headtracking.gif for example of the "face" blob
             - "face" is a small blob ontop of a "body" a larger blob
+    - Ask Tyler for some help
 - Background elimitation: **(10%)**
     - Haar?
     - I don't know what to do about this one. Just find the face and smooth out the edges?

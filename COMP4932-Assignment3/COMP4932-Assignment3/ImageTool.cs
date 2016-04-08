@@ -156,8 +156,7 @@ namespace COMP4932_Assignment3
                     array[i * width + j] = a[i, j];
                 }
             }
-            ILRetArray<double> A = ILMath.array(
-                array, width, width);
+            ILRetArray<double> A = ILMath.array(array, width, width);
             ILArray<complex> eigVectors = ILMath.array(new complex(0, 0), width * width);
             ILArray<complex> eigValues = ILMath.eig(A, eigVectors);
             return new EigenObject(eigVectors, eigValues, width);

@@ -11,17 +11,9 @@ namespace COMP4932_Assignment3
     /// </summary>
     class FaceFinder
     {
-        void findFace()
+        void checkFace(double [,] block)
         {
-
-        }   
-
-        /// <summary>
-        /// This will be used for the call to the eigenface
-        /// </summary>
-        void compareFace()
-        {
-
-        }     
+            
+        }
     }
 }

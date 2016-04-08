@@ -7,6 +7,9 @@ using ILNumerics;
 
 namespace COMP4932_Assignment3
 {
+    /// <summary>
+    /// Contains the vectors and values of an image.
+    /// </summary>
     public class EigenObject
     {
         public complex[] Values { get; set; }

@@ -24,11 +24,73 @@ namespace COMP4932_Assignment3
         System.Windows.Forms.Timer grayTicker = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer diffTicker = new System.Windows.Forms.Timer();
 
+        // EigenStuff
+        public const double SAME_FACE_THRESH = 7.0;
+        public const double FACE_THRESH = 16000;
+        public const int REGULAR = 0, DIFFERENCE = 1, EIGEN = 2;
+        public const int FACES_PER_PERSON = 3;
+        public double[][,] lib;
+        public double[][,] difLib;
+        public double[][,] eigFaces;
+        public double[,] avg;
+        public double[,] recon;
+        public double[][] libWeights;
+        public double[] comp;
+        public int display;
+        public Bitmap mainBmp;
+        public Bitmap libBmp;
+        public double faceSpace;
+
         public FaceRecognition()
         {
             InitializeComponent();
             grayTicker.Tick += new System.EventHandler(gifGrayPlay);
             diffTicker.Tick += new System.EventHandler(gifDiffPlay);
+            mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
+            double[,] img = ImageTool.GetGreyScale(mainBmp);
+            ImageTool.SetImage(mainBmp, img);
+            int libCount = LoadLibrary("./imgLib", mainBmp.Width, mainBmp.Height, FACES_PER_PERSON); // Loads the library with images that are the same size as the main bitmap
+            avg = ImageTool.GetAvg(lib);
+            difLib = ImageTool.GetDifferenceArray(lib, avg);
+            libBmp = new Bitmap(mainBmp.Width, mainBmp.Height);
+            EigenObject eigVects = ImageTool.GetEigen(ImageTool.GetA(lib));
+            ImageTool.normalize(eigVects.Vectors);
+            eigFaces = ImageTool.getEigenFaces(eigVects.Vectors, difLib);
+            libWeights = new double[lib.Length][];
+            for (int i = 0; i < lib.Length; i++)
+            {
+                libWeights[i] = ImageTool.getWeights(eigFaces, lib[i], avg);
+            }
+            double[] weights = ImageTool.getWeights(eigFaces, img, avg);
+            comp = ImageTool.compareWeigths(libWeights, weights);
+            int p = ImageTool.smallestVal(comp);
+            recon = ImageTool.reconstruct(weights, eigFaces, avg);
+            ImageTool.normalize(recon, 255);
+            ImageTool.SetImage(libBmp, lib[p]);
+        }
+
+        /// <summary>
+        /// Loads in the library for the faces
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="subSet"></param>
+        /// <returns></returns>
+        public int LoadLibrary(string directory, int width, int height, int subSet)
+        {
+            string[] images = Directory.GetFiles(@directory, "*.jpg");
+            if (subSet < 1)
+                subSet = 1;
+            lib = new double[images.Length][,];
+            int i = 0;
+            foreach (string image in images)
+            {
+                lib[i++] = ImageTool.GetArray(new Bitmap(image));
+            }
+            if (subSet > 1)
+                lib = ImageTool.avgSubsets(lib, subSet);
+            return images.Length / subSet;
         }
 
         /// <summary>
@@ -64,7 +126,7 @@ namespace COMP4932_Assignment3
         {
             startup();
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "GIF Files|*.gif|JPG Files|*.jpg|PNG Files|*.png|BMP Files|*.bmp|All Files|*.*";
+            openFileDialog1.Filter = "JPG Files|*.jpg|GIF Files|*.gif|PNG Files|*.png|BMP Files|*.bmp|All Files|*.*";
             DialogResult result = openFileDialog1.ShowDialog(); // I want to open this to the child window in the file
             if (result == DialogResult.OK) // checks if the result returned true
             {
@@ -85,6 +147,8 @@ namespace COMP4932_Assignment3
                             dataObj.images.Add((Bitmap)Bitmap.FromFile(openFileDialog2.FileName));
                             pictureBox2.Image = (Image)dataObj.images.ElementAt(1);
                             jPEGToolStripMenuItem.Enabled = true; // Enables JPEG Grayscale
+                            findFaceToolStripMenuItem.Enabled = true;
+                            faceFinderToolstripJPEG(true);
                         }
                         else
                         {

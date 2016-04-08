@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,6 +62,6 @@ namespace COMP4932_Assignment3
             {
                 gifdiffsarray[i] = diffs.ElementAt(i);
             }
-        }
+        } 
     }
 }
