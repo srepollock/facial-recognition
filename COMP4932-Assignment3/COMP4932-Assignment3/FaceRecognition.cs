@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AForge.Video;
+using AForge.Video.DirectShow;
 
 namespace COMP4932_Assignment3
 {
@@ -23,6 +25,10 @@ namespace COMP4932_Assignment3
         /// </summary>
         System.Windows.Forms.Timer grayTicker = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer diffTicker = new System.Windows.Forms.Timer();
+        // Video Capture Devices
+        private bool DeviceExist = false;
+        private FilterInfoCollection videoDevices;
+        private VideoCaptureDevice videoSource = null;
 
         // EigenStuff
         public const double SAME_FACE_THRESH = 7.0;
@@ -41,11 +47,17 @@ namespace COMP4932_Assignment3
         public Bitmap libBmp;
         public double faceSpace;
 
+        /// <summary>
+        /// Called when the class is loaded up.
+        /// </summary>
         public FaceRecognition()
         {
             InitializeComponent();
             grayTicker.Tick += new System.EventHandler(gifGrayPlay);
             diffTicker.Tick += new System.EventHandler(gifDiffPlay);
+
+            // Student code
+            /*
             mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
             pictureBox1.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
@@ -68,6 +80,7 @@ namespace COMP4932_Assignment3
             recon = ImageTool.reconstruct(weights, eigFaces, avg);
             ImageTool.normalize(recon, 255);
             ImageTool.SetImage(libBmp, lib[p]);
+            */
         }
 
         /// <summary>
@@ -348,6 +361,126 @@ namespace COMP4932_Assignment3
         {
             if (dataObj.curdimage >= dataObj.gifgrayarray.Length) dataObj.curdimage = 0;
             pictureBox3.Image = dataObj.gifdiffsarray[dataObj.curdimage++];
+        }
+
+        // Camera features
+
+        /// <summary>
+        /// Gets the cameras in the system.
+        /// </summary>
+        private void getCamList()
+        {
+            try
+            {
+                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                comboBox1.Items.Clear();
+                if (videoDevices.Count == 0)
+                    throw new ApplicationException();
+
+                DeviceExist = true;
+                foreach (FilterInfo device in videoDevices)
+                {
+                    comboBox1.Items.Add(device.Name);
+                }
+                comboBox1.SelectedIndex = 0; //make dafault to first cam
+            }
+            catch (ApplicationException)
+            {
+                DeviceExist = false;
+                comboBox1.Items.Add("No capture device on your system");
+            }
+        }
+
+        /// <summary>
+        /// Refereshes the cameras listed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void refCamera_Click(object sender, EventArgs e)
+        {
+            getCamList();
+        }
+
+        /// <summary>
+        /// Starts the camera listed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ldCamera_Click(object sender, EventArgs e)
+        {
+            if (start.Text == "&Start")
+            {
+                if (DeviceExist)
+                {
+                    videoSource = new VideoCaptureDevice(videoDevices[comboBox1.SelectedIndex].MonikerString);
+                    videoSource.NewFrame += new NewFrameEventHandler(video_NewFrame);
+                    CloseVideoSource();
+                    videoSource.DesiredFrameSize = new Size(160, 120);
+                    //videoSource.DesiredFrameRate = 10;
+                    videoSource.Start();
+                    videoInfo.Text = "Device running...";
+                    start.Text = "&Stop";
+                    timer1.Enabled = true;
+                }
+                else
+                {
+                    videoInfo.Text = "Error: No Device selected.";
+                }
+            }
+            else
+            {
+                if (videoSource.IsRunning)
+                {
+                    timer1.Enabled = false;
+                    CloseVideoSource();
+                    videoInfo.Text = "Device stopped.";
+                    start.Text = "&Start";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the video
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            Bitmap img = (Bitmap)eventArgs.Frame.Clone();
+            pictureBox1.Image = img;
+        }
+
+        /// <summary>
+        /// Stops the video.
+        /// </summary>
+        private void CloseVideoSource()
+        {
+            if (!(videoSource == null))
+                if (videoSource.IsRunning)
+                {
+                    videoSource.SignalToStop();
+                    videoSource = null;
+                }
+        }
+
+        /// <summary>
+        /// For every tiimer tick refresh.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+            videoInfo.Text = "Device running... " + videoSource.FramesReceived.ToString() + " FPS";
+        }
+
+        /// <summary>
+        /// Closes the source when the form closes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CloseVideoSource();
         }
     }
 }
