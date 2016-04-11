@@ -33,6 +33,9 @@ namespace COMP4932_Assignment3
         private bool DeviceExist = false;
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource = null;
+        // Face Recognition
+        ObjectDetector objDet = new ObjectDetector(new Detect.Haar.Face(), 30);
+        Rectangle[] rekt;
 
         // EigenStuff
         public const double SAME_FACE_THRESH = 7.0;
@@ -85,6 +88,16 @@ namespace COMP4932_Assignment3
             ImageTool.normalize(recon, 255);
             ImageTool.SetImage(libBmp, lib[p]);
             */
+        }
+
+        /// <summary>
+        /// Closes the source when the form closes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CloseVideoSource();
         }
 
         /// <summary>
@@ -393,6 +406,30 @@ namespace COMP4932_Assignment3
             }
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        /// <summary>
+        /// Sets combobox2 to the resolutions of the selected camera.
+        /// </summary>
+        private void getResList()
+        {
+            VideoCaptureDevice temp = new VideoCaptureDevice(videoDevices[comboBox1.SelectedIndex].MonikerString);
+            for (int i = 0; i < temp.VideoCapabilities.Length; i++)
+            {
+                comboBox2.Items.Add(temp.VideoCapabilities[i].FrameSize.ToString());
+            }
+            comboBox2.SelectedIndex = 0;
+            temp.Stop();
+        }
+
         /// <summary>
         /// Refereshes the cameras listed
         /// </summary>
@@ -401,6 +438,7 @@ namespace COMP4932_Assignment3
         private void refCamera_Click(object sender, EventArgs e)
         {
             getCamList();
+            getResList();
         }
 
         /// <summary>
@@ -415,13 +453,14 @@ namespace COMP4932_Assignment3
                 if (DeviceExist)
                 {
                     videoSource = new VideoCaptureDevice(videoDevices[comboBox1.SelectedIndex].MonikerString);
-                    //videoSource.VideoResolution = videoSource.VideoCapabilities[0];
+                    videoSource.VideoResolution = videoSource.VideoCapabilities[comboBox2.SelectedIndex];
                     videoSource.NewFrame += new NewFrameEventHandler(video_NewFrame);
                     CloseVideoSource();
                     videoSource.Start();
                     videoInfo.Text = "Device running...";
                     start.Text = "&Stop";
                     timer1.Enabled = true;
+                    captureFaceToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
@@ -436,6 +475,7 @@ namespace COMP4932_Assignment3
                     CloseVideoSource();
                     videoInfo.Text = "Device stopped.";
                     start.Text = "&Start";
+                    captureFaceToolStripMenuItem.Enabled = false;
                 }
             }
         }
@@ -450,16 +490,16 @@ namespace COMP4932_Assignment3
         {
             ResizeNearestNeighbor filter = new ResizeNearestNeighbor(640, 400);
             Bitmap img = (Bitmap)eventArgs.Frame.Clone();
-            img = filter.Apply(img);
+            //img = filter.Apply(img);
             // Get the faces in the image as rects
-
-            ObjectDetector objDet = new ObjectDetector(new Detect.Haar.Face(), 30);
 
             using (Graphics g = Graphics.FromImage(img))
             {
                 Color color = Color.FromArgb(255, Color.Red);
                 Pen brush = new Pen(color);
-                g.DrawRectangles(brush, objDet.ProcessFrame(img)); // Draw the all the rectangles
+                rekt = objDet.ProcessFrame(img);
+                if(rekt.Length > 0)
+                    g.DrawRectangles(brush, rekt); // Draw the all the rectangles
             }
 
             pictureBox1.Image = img;
@@ -489,13 +529,24 @@ namespace COMP4932_Assignment3
         }
 
         /// <summary>
-        /// Closes the source when the form closes
+        /// Take a photo of the first selected face.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void captureFaceToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            CloseVideoSource();
+            if (rekt.Length > 0)
+            {
+                if (rekt[0] != null)
+                {
+                    // Get the rectangles position and save it
+                    Bitmap org = (Bitmap)pictureBox1.Image;
+                    Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+                    Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+                    img = filter.Apply(img);
+                    capFacePic.Image = img;
+                }
+            }
         }
     }
 }
