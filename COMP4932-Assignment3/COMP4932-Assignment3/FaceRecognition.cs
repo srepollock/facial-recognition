@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
+using AForge.Imaging.Filters;
+using COMP4932_Assignment3.Detect;
+using COMP4932_Assignment3.Detect.Haar;
+using COMP4932_Assignment3.Detect.Imaging;
 
 namespace COMP4932_Assignment3
 {
@@ -363,8 +367,6 @@ namespace COMP4932_Assignment3
             pictureBox3.Image = dataObj.gifdiffsarray[dataObj.curdimage++];
         }
 
-        // Camera features
-
         /// <summary>
         /// Gets the cameras in the system.
         /// </summary>
@@ -413,10 +415,9 @@ namespace COMP4932_Assignment3
                 if (DeviceExist)
                 {
                     videoSource = new VideoCaptureDevice(videoDevices[comboBox1.SelectedIndex].MonikerString);
+                    //videoSource.VideoResolution = videoSource.VideoCapabilities[0];
                     videoSource.NewFrame += new NewFrameEventHandler(video_NewFrame);
                     CloseVideoSource();
-                    videoSource.DesiredFrameSize = new Size(160, 120);
-                    //videoSource.DesiredFrameRate = 10;
                     videoSource.Start();
                     videoInfo.Text = "Device running...";
                     start.Text = "&Stop";
@@ -439,6 +440,7 @@ namespace COMP4932_Assignment3
             }
         }
 
+        // TODO Call get the rectangles and draw the image
         /// <summary>
         /// Updates the video
         /// </summary>
@@ -446,7 +448,20 @@ namespace COMP4932_Assignment3
         /// <param name="eventArgs"></param>
         private void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            ResizeNearestNeighbor filter = new ResizeNearestNeighbor(640, 400);
             Bitmap img = (Bitmap)eventArgs.Frame.Clone();
+            img = filter.Apply(img);
+            // Get the faces in the image as rects
+
+            ObjectDetector objDet = new ObjectDetector(new Detect.Haar.Face(), 30);
+
+            using (Graphics g = Graphics.FromImage(img))
+            {
+                Color color = Color.FromArgb(255, Color.Red);
+                Pen brush = new Pen(color);
+                g.DrawRectangles(brush, objDet.ProcessFrame(img)); // Draw the all the rectangles
+            }
+
             pictureBox1.Image = img;
         }
 

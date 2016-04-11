@@ -55,7 +55,7 @@
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.videoInfo = new System.Windows.Forms.TextBox();
+            this.videoInfo = new System.Windows.Forms.Label();
             this.start = new System.Windows.Forms.Button();
             this.refCamera = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -276,8 +276,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.90141F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.09859F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.80519F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.19481F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -300,15 +300,17 @@
             this.panel1.Location = new System.Drawing.Point(6, 6);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(248, 932);
+            this.panel1.Size = new System.Drawing.Size(293, 932);
             this.panel1.TabIndex = 0;
             // 
             // videoInfo
             // 
-            this.videoInfo.Location = new System.Drawing.Point(0, 901);
+            this.videoInfo.AutoSize = true;
+            this.videoInfo.Location = new System.Drawing.Point(22, 239);
             this.videoInfo.Name = "videoInfo";
-            this.videoInfo.Size = new System.Drawing.Size(251, 31);
+            this.videoInfo.Size = new System.Drawing.Size(119, 25);
             this.videoInfo.TabIndex = 3;
+            this.videoInfo.Text = "Device Info";
             // 
             // start
             // 
@@ -344,11 +346,11 @@
             this.tabControl1.Controls.Add(this.tab2);
             this.tabControl1.Controls.Add(this.tab3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(266, 6);
+            this.tabControl1.Location = new System.Drawing.Point(311, 6);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1268, 932);
+            this.tabControl1.Size = new System.Drawing.Size(1223, 932);
             this.tabControl1.TabIndex = 1;
             // 
             // tab1
@@ -358,7 +360,7 @@
             this.tab1.Margin = new System.Windows.Forms.Padding(6);
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Windows.Forms.Padding(6);
-            this.tab1.Size = new System.Drawing.Size(1252, 885);
+            this.tab1.Size = new System.Drawing.Size(1207, 885);
             this.tab1.TabIndex = 0;
             this.tab1.Text = "Image 1";
             this.tab1.UseVisualStyleBackColor = true;
@@ -369,7 +371,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(6, 6);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1240, 873);
+            this.pictureBox1.Size = new System.Drawing.Size(1195, 873);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -490,8 +492,8 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button start;
         private System.Windows.Forms.Button refCamera;
-        private System.Windows.Forms.TextBox videoInfo;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label videoInfo;
     }
 }
 
