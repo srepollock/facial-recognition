@@ -12,12 +12,11 @@ using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using AForge.Imaging.Filters;
-using COMP4932_Assignment3.Detect;
-using COMP4932_Assignment3.Detect.Haar;
-using COMP4932_Assignment3.Detect.Imaging;
+
 
 namespace COMP4932_Assignment3
 {
+    using COMP4932_Assignment3.ViolaJones.Detection;
     public partial class FaceRecognition : Form
     {
         /// <summary>
@@ -34,11 +33,11 @@ namespace COMP4932_Assignment3
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource = null;
         // Face Recognition
-        ObjectDetector objDet = new ObjectDetector(new Detect.Haar.Face(), 30);
+        HaarObjectDetector objDet = new HaarObjectDetector(new ViolaJones.Detection.HaarCascade.Def.FaceHaarCascade(), 30); // TODO FIX
         Rectangle[] rekt;
 
         // EigenStuff
-        public const double SAME_FACE_THRESH = 7.0;
+        public const double SAME_FACE_THRESH = 7.4;
         public const double FACE_THRESH = 16000;
         public const int REGULAR = 0, DIFFERENCE = 1, EIGEN = 2;
         public const int FACES_PER_PERSON = 3;
@@ -110,7 +109,7 @@ namespace COMP4932_Assignment3
         /// <returns></returns>
         public int LoadLibrary(string directory, int width, int height, int subSet)
         {
-            string[] images = Directory.GetFiles(@directory, "*.jpg");
+            string[] images = Directory.GetFiles(@directory, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
             if (subSet < 1)
                 subSet = 1;
             lib = new double[images.Length][,];
