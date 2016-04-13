@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using AForge.Imaging.Filters;
+using System.Threading.Tasks;
 
 namespace COMP4932_Assignment3
 {
@@ -58,7 +59,7 @@ namespace COMP4932_Assignment3
             diffTicker.Tick += new System.EventHandler(gifDiffPlay);
 
             // Student code
-            /*
+            ///*
             mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
             pictureBox1.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
@@ -81,7 +82,7 @@ namespace COMP4932_Assignment3
             recon = ImageTool.reconstruct(weights, eigFaces, avg);
             ImageTool.normalize(recon, 255);
             ImageTool.SetImage(libBmp, lib[p]);
-            */
+            //*/
         }
 
         /// <summary>
@@ -172,8 +173,6 @@ namespace COMP4932_Assignment3
                             dataObj.images.Add((Bitmap)Bitmap.FromFile(openFileDialog2.FileName));
                             pictureBox2.Image = (Image)dataObj.images.ElementAt(1);
                             jPEGToolStripMenuItem.Enabled = true; // Enables JPEG Grayscale
-                            findFaceToolStripMenuItem.Enabled = true;
-                            faceFinderToolstripJPEG(true);
                         }
                         else
                         {
@@ -199,31 +198,6 @@ namespace COMP4932_Assignment3
             jPEGToolStripMenuItem1.Enabled = false;
             gIFToolStripMenuItem1.Enabled = false;
             gIFToolStripMenuItem2.Enabled = false;
-            findFaceToolStripMenuItem.Enabled = false;
-            faceFinderToolstripGIF(false);
-            faceFinderToolstripJPEG(false);
-        }
-
-        /// <summary>
-        /// Turns on face finder buttons for jpeg images.
-        /// </summary>
-        /// <param name="b">True/False</param>
-        void faceFinderToolstripJPEG(Boolean b)
-        {
-            jPEGToolStripMenuItem2.Enabled = b;
-            jPEGToolStripMenuItem3.Enabled = b;
-            jPEGToolStripMenuItem4.Enabled = b;
-        }
-
-        /// <summary>
-        /// Turns on face finder buttons for gif images.
-        /// </summary>
-        /// <param name="b">True/False</param>
-        void faceFinderToolstripGIF(Boolean b)
-        {
-            gIFToolStripMenuItem.Enabled = b;
-            gIFToolStripMenuItem3.Enabled = b;
-            gIFToolStripMenuItem4.Enabled = b;
         }
 
         /// <summary>
@@ -304,8 +278,6 @@ namespace COMP4932_Assignment3
             dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(1)));
             pictureBox2.Image = (Image)dataObj.grayscales.ElementAt(1);
             jPEGToolStripMenuItem1.Enabled = true; // Diff JPEG
-            findFaceToolStripMenuItem.Enabled = true; // Enables Face Finder
-            faceFinderToolstripJPEG(true);
         }
 
         /// <summary>
@@ -348,8 +320,6 @@ namespace COMP4932_Assignment3
             }
             dataObj.setupGifDiffArray();
             diffTicker.Start();
-            findFaceToolStripMenuItem.Enabled = true; // Enables Face Finder
-            faceFinderToolstripGIF(true);
         }
 
         /// <summary>
@@ -491,13 +461,13 @@ namespace COMP4932_Assignment3
         /// <param name="eventArgs"></param>
         private void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            ResizeNearestNeighbor filter = new ResizeNearestNeighbor(640, 400);
             Bitmap img = (Bitmap)eventArgs.Frame.Clone();
-            //img = filter.Apply(img);
             // Get the faces in the image as rects
 
-            rekt = objDet.ProcessFrame(img); // Gets the faces
-            // TODO Drawing may take too long
+            // TODO Thread here
+
+            //rekt = objDet.ProcessFrame(img); // Gets the faces
+
             /*
             using (Graphics g = Graphics.FromImage(img))
             {
@@ -535,6 +505,19 @@ namespace COMP4932_Assignment3
         }
 
         /// <summary>
+        /// Runs task to process the image taken in.
+        /// </summary>
+        /// <param name="img"></param>
+        /// <returns></returns>
+        private Rectangle[] processDatImage(Bitmap img)
+        {
+            Rectangle[] kappa;
+            var kek = Task.Run<Rectangle[]>(() => objDet.ProcessFrame(img));
+            kappa = kek.Result;
+            return kappa;
+        }
+
+        /// <summary>
         /// Take a photo of the first selected face.
         /// </summary>
         /// <param name="sender"></param>
@@ -542,6 +525,7 @@ namespace COMP4932_Assignment3
         private void captureFaceToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             try {
+                rekt = processDatImage((Bitmap)pictureBox1.Image); // Starts a new task to get the pictures
                 if (rekt.Length > 0)
                 {
                     if (rekt[0] != null)
@@ -555,6 +539,7 @@ namespace COMP4932_Assignment3
                         Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
                         img = filter.Apply(img);
                         capFacePic.Image = img;
+                        findFaceToolStripMenuItem1.Enabled = true;
                     }
                 }
             }catch(Exception kappa)
@@ -564,6 +549,43 @@ namespace COMP4932_Assignment3
                 {
                     Debug.WriteLine("kappabilities not found");
                 }
+            }
+        }
+
+        // TODO Not working. Get the image here and I need to either scale/resize to 256 x 256. Here lies the issue
+        /// <summary>
+        /// Finds the face in the capFacePick picture box.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void findFaceToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            mainBmp = (Bitmap)capFacePic.Image;
+            fndFacePic.Image = mainBmp;
+            double[,] img = ImageTool.GetGreyScale(mainBmp);
+            ImageTool.SetImage(mainBmp, img);
+            double[] weights = ImageTool.getWeights(eigFaces, img, avg);
+            comp = ImageTool.compareWeigths(libWeights, weights);
+            int p = ImageTool.smallestVal(comp);
+
+            if (comp[p] > SAME_FACE_THRESH)
+            {
+                lb_person.Text = "Person: Unknown";
+            }
+            else
+            {
+                lb_person.Text = "Person: " + p;
+            }
+            recon = ImageTool.reconstruct(weights, eigFaces, avg);
+
+            //pb_lib.Image = libBmp;
+            ImageTool.SetImage(libBmp, lib[p]);
+            lb_distance.Text = "Distance : " + comp[p];
+            faceSpace = ImageTool.difference(img, recon);
+            lb_faceSpace.Text = "Face Space : " + faceSpace;
+            if (faceSpace > FACE_THRESH)
+            {
+                lb_faceSpace.Text += "\nNot a face";
             }
         }
     }
