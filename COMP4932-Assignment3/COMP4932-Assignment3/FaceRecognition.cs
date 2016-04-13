@@ -10,6 +10,7 @@ using AForge.Imaging.Filters;
 
 namespace COMP4932_Assignment3
 {
+    using System.Diagnostics;
     using COMP4932_Assignment3.ViolaJones.Detection;
     public partial class FaceRecognition : Form
     {
@@ -540,19 +541,28 @@ namespace COMP4932_Assignment3
         /// <param name="e"></param>
         private void captureFaceToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if (rekt.Length > 0)
-            {
-                if (rekt[0] != null)
+            try {
+                if (rekt.Length > 0)
                 {
-                    // Get the rectangles position and save it
-                    Bitmap org = (Bitmap)pictureBox1.Image;
-                    Rectangle ripp = rekt[0];
-                    ripp.Inflate(20, 20);
-                    //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
-                    Bitmap img = org.Clone(ripp, org.PixelFormat);
-                    Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
-                    img = filter.Apply(img);
-                    capFacePic.Image = img;
+                    if (rekt[0] != null)
+                    {
+                        // Get the rectangles position and save it
+                        Bitmap org = (Bitmap)pictureBox1.Image;
+                        Rectangle ripp = rekt[0];
+                        ripp.Inflate(20, 20);
+                        //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+                        Bitmap img = org.Clone(ripp, org.PixelFormat);
+                        Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+                        img = filter.Apply(img);
+                        capFacePic.Image = img;
+                    }
+                }
+            }catch(Exception kappa)
+            {
+                Debug.WriteLine(kappa.ToString());
+                for (int i = 0; i < 11; i++)
+                {
+                    Debug.WriteLine("kappabilities not found");
                 }
             }
         }
