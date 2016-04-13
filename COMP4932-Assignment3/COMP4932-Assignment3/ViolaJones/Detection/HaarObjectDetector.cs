@@ -107,7 +107,7 @@
         private int channel = RGB.R;
 
         private Rectangle[] lastObjects;
-        private int steadyThreshold = 2;
+        private int steadyThreshold = 4;
 
         private int baseWidth;
         private int baseHeight;

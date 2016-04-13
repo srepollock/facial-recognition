@@ -479,7 +479,6 @@ namespace COMP4932_Assignment3
             return index;
         }
 
-
         public static double[][,] avgSubsets(double[][,] faces, int setSize)
         {
             double[][,] result = new double[faces.Length / setSize][,];

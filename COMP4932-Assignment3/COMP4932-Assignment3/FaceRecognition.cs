@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using AForge.Imaging.Filters;
-
 
 namespace COMP4932_Assignment3
 {
@@ -26,14 +20,14 @@ namespace COMP4932_Assignment3
         /// <summary>
         /// Timer for the GIF image.
         /// </summary>
-        System.Windows.Forms.Timer grayTicker = new System.Windows.Forms.Timer();
-        System.Windows.Forms.Timer diffTicker = new System.Windows.Forms.Timer();
+        Timer grayTicker = new Timer();
+        Timer diffTicker = new Timer();
         // Video Capture Devices
         private bool DeviceExist = false;
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource = null;
         // Face Recognition
-        HaarObjectDetector objDet = new HaarObjectDetector(new ViolaJones.Detection.HaarCascade.Def.FaceHaarCascade(), 30); // TODO FIX
+        HaarObjectDetector objDet = new HaarObjectDetector(new ViolaJones.Detection.HaarCascade.Def.FaceHaarCascade(), 30);
         Rectangle[] rekt;
 
         // EigenStuff
@@ -358,6 +352,26 @@ namespace COMP4932_Assignment3
         }
 
         /// <summary>
+        /// Called when the combo box changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Called when the combo box is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// Ticker function to play the grayscale image.
         /// </summary>
         /// <param name="sender"></param>
@@ -403,16 +417,6 @@ namespace COMP4932_Assignment3
                 DeviceExist = false;
                 comboBox1.Items.Add("No capture device on your system");
             }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         /// <summary>
@@ -479,7 +483,6 @@ namespace COMP4932_Assignment3
             }
         }
 
-        // TODO Call get the rectangles and draw the image
         /// <summary>
         /// Updates the video
         /// </summary>
@@ -492,6 +495,9 @@ namespace COMP4932_Assignment3
             //img = filter.Apply(img);
             // Get the faces in the image as rects
 
+            rekt = objDet.ProcessFrame(img); // Gets the faces
+            // TODO Drawing may take too long
+            /*
             using (Graphics g = Graphics.FromImage(img))
             {
                 Color color = Color.FromArgb(255, Color.Red);
@@ -500,7 +506,7 @@ namespace COMP4932_Assignment3
                 if(rekt.Length > 0)
                     g.DrawRectangles(brush, rekt); // Draw the all the rectangles
             }
-
+            */
             pictureBox1.Image = img;
         }
 
@@ -540,7 +546,10 @@ namespace COMP4932_Assignment3
                 {
                     // Get the rectangles position and save it
                     Bitmap org = (Bitmap)pictureBox1.Image;
-                    Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+                    Rectangle ripp = rekt[0];
+                    ripp.Inflate(20, 20);
+                    //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+                    Bitmap img = org.Clone(ripp, org.PixelFormat);
                     Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
                     img = filter.Apply(img);
                     capFacePic.Image = img;
