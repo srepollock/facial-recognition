@@ -21,3 +21,22 @@
         - I know I have to apply a filter
 - [  ] Integration of code provided: **(20%)**
     - basically we have to use this. Just get it working and this is done
+
+## Thoughs
+> Basic ideas and just a notepad for thoughts on the project
+
+1. Find the best face
+    - Instead of using just rekt[0], use rekt[i], looping through the faces and finding the best  
+        
+            for(int i = 0; i < rects.Lenght; i++){
+                // Calc face distance here
+                if(calcFaceDist < FACE_THRESH){
+                    // We may have a face
+                    if(calcFaceDist < min){
+                        faceRectangle = rect[i];
+                        min = calcFaceDist;
+                    }
+                }
+            }  
+            
+    > What functions do I need to call here? What am I actually calculating?

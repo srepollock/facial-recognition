@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="EigenObject.cs" />
-    <Compile Include="FaceFinder.cs" />
     <Compile Include="FaceRecognition.cs">
       <SubType>Form</SubType>
     </Compile>

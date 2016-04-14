@@ -33,7 +33,7 @@ namespace COMP4932_Assignment3
         Rectangle[] rekt;
 
         // EigenStuff
-        public const double SAME_FACE_THRESH = 7.4;
+        public const double SAME_FACE_THRESH = 7.8;
         public const double FACE_THRESH = 16000;
         public const int REGULAR = 0, DIFFERENCE = 1, EIGEN = 2;
         public const int FACES_PER_PERSON = 3;
@@ -468,7 +468,7 @@ namespace COMP4932_Assignment3
 
             //rekt = objDet.ProcessFrame(img); // Gets the faces
 
-
+            /*TESTING FOR THE FACE BOXES*/
             //using (Graphics g = Graphics.FromImage(img))
             //{
             //    Color color = Color.FromArgb(255, Color.Red);
@@ -524,32 +524,110 @@ namespace COMP4932_Assignment3
         /// <param name="e"></param>
         private void captureFaceToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            try {
-                rekt = processDatImage((Bitmap)pictureBox1.Image); // Starts a new task to get the pictures
-                if (rekt.Length > 0)
+            /********************/
+            /*Find the best face*/
+                // This is among our rectangles
+            Bitmap org = (Bitmap)pictureBox1.Image; // Take the current image in the picturebox
+            double min = double.MaxValue; // Minimum value
+            Rectangle ripp = new Rectangle();
+            try // just in case
+            {
+                rekt = processDatImage(org); // Process the current image and get all the 'faces' in it
+                if(rekt.Length >= 1) // We found at least one
                 {
-                    if (rekt[0] != null)
+                    // Now find the best face
+                    for(int i = 0; i < rekt.Length; i++)
                     {
-                        // Get the rectangles position and save it
-                        Bitmap org = (Bitmap)pictureBox1.Image;
-                        Rectangle ripp = rekt[0];
+                        // Get a copy of the image in the box
+                        Rectangle rectTemp = rekt[i]; // Copy, we need to inflate the rectangle
+                        rectTemp.Inflate(20, 20); // Inflate a bit, we have to resize anyways
+                        Bitmap temp = org.Clone(rectTemp, org.PixelFormat); // Get a copy of what is inside the box // may need to rescale
+                        double[,] tempAr = ImageTool.GetArray(temp); // Change the temp bitmap into a double 2D array
+                        // Already grayscaled
+                        double[] w = ImageTool.getWeights(eigFaces, tempAr, avg); // Gets the weights of the current selected face. eigFaces and avg are setup from the library
+                        double[] compW = ImageTool.compareWeigths(libWeights, w); // Compare all the weights in the library with their images and the weights of the current image
+                        int p = ImageTool.smallestVal(compW); // Gets the face that has the smallest weight
+                        if(compW[p] < SAME_FACE_THRESH)
+                        {
+                            // Possible face
+                            if(compW[p] < min)
+                            {
+                                ripp = rectTemp; // Inflated rect
+                            }
+                        }
+                    }
+                    if (!ripp.IsEmpty) // We actually have one
+                    {
                         ripp.Inflate(20, 20);
                         //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
                         Bitmap img = org.Clone(ripp, org.PixelFormat);
                         Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
                         img = filter.Apply(img);
+                        img = ImageTool.ResizeImage(img, 256, 256);
                         capFacePic.Image = img;
                         findFaceToolStripMenuItem1.Enabled = true;
                     }
                 }
-            }catch(Exception kappa)
-            {
-                Debug.WriteLine(kappa.ToString());
-                for (int i = 0; i < 11; i++)
-                {
-                    Debug.WriteLine("kappabilities not found");
-                }
             }
+            catch(Exception trollception)
+            {
+                Debug.WriteLine(trollception.ToString());
+                Debug.WriteLine("kappabilities of the image not found."); // Print something pretty troll
+            }
+            /********************/
+
+            /************************************/
+            /*Getting the face from the 256 x 256*/ // function below
+            //Bitmap org = (Bitmap)pictureBox1.Image; // Take the current image in the picturebox
+            //double[,] orgAr = ImageTool.GetArray(org); // Get the array of the image, for differencing
+            // Already grayscale
+            //double[] w = ImageTool.getWeights(eigFaces, orgAr, avg); // Gets the weights of the current selected face. eigFaces and avg are setup from the library
+            //double[] compW = ImageTool.compareWeigths(libWeights, w); // Compare all the weights in the library with their images and the weights of the current image
+            //int p = ImageTool.smallestVal(comp); // Gets the face that has the smallest weight
+            /************************************/
+
+            //Bitmap org = (Bitmap)pictureBox1.Image;
+            //double[,] orgArray = ImageTool.GetArray(org); // Original image double array for comparrison
+            //double min = double.MaxValue;
+            //Rectangle ripp = new Rectangle();
+            //try {
+            //    rekt = processDatImage((Bitmap)pictureBox1.Image); // Starts a new task to get the pictures
+            //    if (rekt.Length > 0)
+            //    {
+            //        for(int i = 0; i < rekt.Length; i++)
+            //        {
+            //            double calcFaceSpace = ImageTool.difference(orgArray, );
+            //            if( calcFaceSpace < FACE_THRESH)
+            //            {
+            //                // we may have a face
+            //                if( calcFaceSpace < min)
+            //                {
+            //                    ripp = rekt[i];
+            //                    min = calcFaceSpace;
+            //                }
+            //            }
+            //        }
+            //        if (!ripp.IsEmpty) // if we did find at least one
+            //        {
+            //            // Get the rectangles position and save it
+            //            ripp.Inflate(20, 20);
+            //            //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+            //            Bitmap img = org.Clone(ripp, org.PixelFormat);
+            //            Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+            //            img = filter.Apply(img);
+            //            img = ImageTool.ResizeImage(img, 256, 256);
+            //            capFacePic.Image = img;
+            //            findFaceToolStripMenuItem1.Enabled = true;
+            //        }
+            //    }
+            //}catch(Exception kappa)
+            //{
+            //    Debug.WriteLine(kappa.ToString());
+            //    for (int i = 0; i < 11; i++)
+            //    {
+            //        Debug.WriteLine("kappabilities not found");
+            //    }
+            //}
         }
 
         // TODO Not working. Get the image here and I need to either scale/resize to 256 x 256. Here lies the issue
