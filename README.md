@@ -28,8 +28,8 @@ Face recognizer program. This is a program that uses your computers webcam to fi
 > - Bottom of the chin at the bottom
 > - Equal gaps on both sides of the head  
 
-1. First capture the face with [Ctrl-Shift-C](#short-keys)
-2. Add the face to the library with [Ctrl-Shift-C](#short-keys)
+1. First capture the face with [Ctrl-Shift-C](controls)
+2. Add the face to the library with [Ctrl-Shift-C](controls)
 3. Name the file `tempXX.bmp` where `XX` is the next number in the series of images  
 
 [FAQ](#faq)
@@ -39,8 +39,8 @@ Face recognizer program. This is a program that uses your computers webcam to fi
     - This will get all the webcams/cameras currently plugged in
 2. Select a resolution from the dropdown below it
     - Fastest results is to use a lower resolution as it is faster at finding the faces
-3. First capture the face with [Ctrl-Shift-C](#short-keys)
-4. Then test if the found face is in the [library*](#library) using [Ctrl-Shift-F](##short-keys)
+3. First capture the face with [Ctrl-Shift-C](controls)
+4. Then test if the found face is in the [library*](#library) using [Ctrl-Shift-F](controls)
     - It will then display the found face & average face reconstructed.  
 
 # FAQ
