@@ -82,6 +82,7 @@ namespace COMP4932_Assignment3
             recon = ImageTool.reconstruct(weights, eigFaces, avg);
             ImageTool.normalize(recon, 255);
             ImageTool.SetImage(libBmp, lib[p]);
+            avgFace.Image = libBmp;
             //*/
         }
 
@@ -511,10 +512,19 @@ namespace COMP4932_Assignment3
         /// <returns></returns>
         private Rectangle[] processDatImage(Bitmap img)
         {
-            Rectangle[] kappa;
-            var kek = Task.Run<Rectangle[]>(() => objDet.ProcessFrame(img));
-            kappa = kek.Result;
-            return kappa;
+            try
+            {
+                Rectangle[] kappa;
+                var kek = Task.Run<Rectangle[]>(() => objDet.ProcessFrame(img));
+                kappa = kek.Result;
+                return kappa;
+            }
+            catch(Exception trollception)
+            {
+                Debug.WriteLine(trollception.ToString());
+                Debug.WriteLine("kappabilities of the image not found."); // Print something pretty troll
+            }
+            return null;
         }
 
         /// <summary>
@@ -630,7 +640,6 @@ namespace COMP4932_Assignment3
             //}
         }
 
-        // TODO Not working. Get the image here and I need to either scale/resize to 256 x 256. Here lies the issue
         /// <summary>
         /// Finds the face in the capFacePick picture box.
         /// </summary>
@@ -640,7 +649,6 @@ namespace COMP4932_Assignment3
         {
             mainBmp = (Bitmap)capFacePic.Image;
             mainBmp = ImageTool.ResizeImage(mainBmp, 256, 256);
-            fndFacePic.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
             ImageTool.SetImage(mainBmp, img); // Breaking here
             double[] weights = ImageTool.getWeights(eigFaces, img, avg);
@@ -659,6 +667,7 @@ namespace COMP4932_Assignment3
 
             //pb_lib.Image = libBmp;
             ImageTool.SetImage(libBmp, lib[p]);
+            fndFacePic.Image = libBmp;
             lb_distance.Text = "Distance : " + comp[p];
             faceSpace = ImageTool.difference(img, recon);
             lb_faceSpace.Text = "Face Space : " + faceSpace;

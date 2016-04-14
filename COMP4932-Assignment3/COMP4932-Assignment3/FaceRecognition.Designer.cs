@@ -42,6 +42,7 @@
             this.gIFToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.captureFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findFaceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -59,15 +60,16 @@
             this.tab3 = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lb_person = new System.Windows.Forms.Label();
+            this.lb_faceSpace = new System.Windows.Forms.Label();
+            this.lb_distance = new System.Windows.Forms.Label();
             this.fndFacePic = new System.Windows.Forms.PictureBox();
             this.fndFaceLabel = new System.Windows.Forms.Label();
             this.capFaceLabel = new System.Windows.Forms.Label();
             this.capFacePic = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.lb_distance = new System.Windows.Forms.Label();
-            this.findFaceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.lb_faceSpace = new System.Windows.Forms.Label();
-            this.lb_person = new System.Windows.Forms.Label();
+            this.avgFace = new System.Windows.Forms.PictureBox();
+            this.libLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -81,6 +83,7 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fndFacePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.capFacePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.avgFace)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -93,7 +96,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(2066, 44);
+            this.menuStrip1.Size = new System.Drawing.Size(2010, 44);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -199,6 +202,16 @@
             this.captureFaceToolStripMenuItem.Text = "Capture Face";
             this.captureFaceToolStripMenuItem.Click += new System.EventHandler(this.captureFaceToolStripMenuItem_Click_1);
             // 
+            // findFaceToolStripMenuItem1
+            // 
+            this.findFaceToolStripMenuItem1.Enabled = false;
+            this.findFaceToolStripMenuItem1.Name = "findFaceToolStripMenuItem1";
+            this.findFaceToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.F)));
+            this.findFaceToolStripMenuItem1.Size = new System.Drawing.Size(401, 38);
+            this.findFaceToolStripMenuItem1.Text = "Find Face";
+            this.findFaceToolStripMenuItem1.Click += new System.EventHandler(this.findFaceToolStripMenuItem1_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -210,7 +223,7 @@
             // gitHubToolStripMenuItem
             // 
             this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
-            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(269, 38);
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(190, 38);
             this.gitHubToolStripMenuItem.Text = "GitHub";
             this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
             // 
@@ -225,11 +238,11 @@
             this.tableLayoutPanel1.Controls.Add(this.panel2, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 44);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(2066, 1143);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2010, 1131);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -241,18 +254,18 @@
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(6, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(302, 1131);
+            this.panel1.Size = new System.Drawing.Size(294, 1119);
             this.panel1.TabIndex = 0;
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(4, 138);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(280, 33);
+            this.comboBox2.Size = new System.Drawing.Size(286, 33);
             this.comboBox2.TabIndex = 4;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -269,9 +282,9 @@
             // start
             // 
             this.start.Location = new System.Drawing.Point(4, 187);
-            this.start.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.start.Margin = new System.Windows.Forms.Padding(4);
             this.start.Name = "start";
-            this.start.Size = new System.Drawing.Size(284, 48);
+            this.start.Size = new System.Drawing.Size(286, 48);
             this.start.TabIndex = 2;
             this.start.Text = "&Start";
             this.start.UseVisualStyleBackColor = true;
@@ -280,9 +293,9 @@
             // refCamera
             // 
             this.refCamera.Location = new System.Drawing.Point(4, 79);
-            this.refCamera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.refCamera.Margin = new System.Windows.Forms.Padding(4);
             this.refCamera.Name = "refCamera";
-            this.refCamera.Size = new System.Drawing.Size(284, 52);
+            this.refCamera.Size = new System.Drawing.Size(286, 52);
             this.refCamera.TabIndex = 1;
             this.refCamera.Text = "Refresh Camera";
             this.refCamera.UseVisualStyleBackColor = true;
@@ -292,9 +305,9 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(4, 31);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(280, 33);
+            this.comboBox1.Size = new System.Drawing.Size(286, 33);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -304,21 +317,21 @@
             this.tabControl1.Controls.Add(this.tab2);
             this.tabControl1.Controls.Add(this.tab3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(320, 6);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabControl1.Location = new System.Drawing.Point(312, 6);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1259, 1131);
+            this.tabControl1.Size = new System.Drawing.Size(1225, 1119);
             this.tabControl1.TabIndex = 1;
             // 
             // tab1
             // 
             this.tab1.Controls.Add(this.pictureBox1);
             this.tab1.Location = new System.Drawing.Point(8, 39);
-            this.tab1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tab1.Margin = new System.Windows.Forms.Padding(6);
             this.tab1.Name = "tab1";
-            this.tab1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tab1.Size = new System.Drawing.Size(1243, 1084);
+            this.tab1.Padding = new System.Windows.Forms.Padding(6);
+            this.tab1.Size = new System.Drawing.Size(1209, 1072);
             this.tab1.TabIndex = 0;
             this.tab1.Text = "Image 1";
             this.tab1.UseVisualStyleBackColor = true;
@@ -327,9 +340,9 @@
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1231, 1072);
+            this.pictureBox1.Size = new System.Drawing.Size(1197, 1060);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -338,10 +351,10 @@
             // 
             this.tab2.Controls.Add(this.pictureBox2);
             this.tab2.Location = new System.Drawing.Point(8, 39);
-            this.tab2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tab2.Margin = new System.Windows.Forms.Padding(6);
             this.tab2.Name = "tab2";
-            this.tab2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tab2.Size = new System.Drawing.Size(1242, 1082);
+            this.tab2.Padding = new System.Windows.Forms.Padding(6);
+            this.tab2.Size = new System.Drawing.Size(1243, 1084);
             this.tab2.TabIndex = 1;
             this.tab2.Text = "Image 2";
             this.tab2.UseVisualStyleBackColor = true;
@@ -350,9 +363,9 @@
             // 
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(1230, 1070);
+            this.pictureBox2.Size = new System.Drawing.Size(1231, 1072);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
@@ -361,9 +374,9 @@
             // 
             this.tab3.Controls.Add(this.pictureBox3);
             this.tab3.Location = new System.Drawing.Point(8, 39);
-            this.tab3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tab3.Margin = new System.Windows.Forms.Padding(6);
             this.tab3.Name = "tab3";
-            this.tab3.Size = new System.Drawing.Size(1242, 1082);
+            this.tab3.Size = new System.Drawing.Size(1243, 1084);
             this.tab3.TabIndex = 2;
             this.tab3.Text = "Image Differences";
             this.tab3.UseVisualStyleBackColor = true;
@@ -372,15 +385,17 @@
             // 
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1242, 1082);
+            this.pictureBox3.Size = new System.Drawing.Size(1243, 1084);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.libLabel);
+            this.panel2.Controls.Add(this.avgFace);
             this.panel2.Controls.Add(this.lb_person);
             this.panel2.Controls.Add(this.lb_faceSpace);
             this.panel2.Controls.Add(this.lb_distance);
@@ -389,16 +404,43 @@
             this.panel2.Controls.Add(this.capFaceLabel);
             this.panel2.Controls.Add(this.capFacePic);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(1591, 6);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel2.Location = new System.Drawing.Point(1549, 6);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(469, 1131);
+            this.panel2.Size = new System.Drawing.Size(455, 1119);
             this.panel2.TabIndex = 2;
+            // 
+            // lb_person
+            // 
+            this.lb_person.AutoSize = true;
+            this.lb_person.Location = new System.Drawing.Point(204, 313);
+            this.lb_person.Name = "lb_person";
+            this.lb_person.Size = new System.Drawing.Size(80, 25);
+            this.lb_person.TabIndex = 6;
+            this.lb_person.Text = "Person";
+            // 
+            // lb_faceSpace
+            // 
+            this.lb_faceSpace.AutoSize = true;
+            this.lb_faceSpace.Location = new System.Drawing.Point(67, 604);
+            this.lb_faceSpace.Name = "lb_faceSpace";
+            this.lb_faceSpace.Size = new System.Drawing.Size(133, 25);
+            this.lb_faceSpace.TabIndex = 5;
+            this.lb_faceSpace.Text = "Face Space:";
+            // 
+            // lb_distance
+            // 
+            this.lb_distance.AutoSize = true;
+            this.lb_distance.Location = new System.Drawing.Point(67, 575);
+            this.lb_distance.Name = "lb_distance";
+            this.lb_distance.Size = new System.Drawing.Size(102, 25);
+            this.lb_distance.TabIndex = 4;
+            this.lb_distance.Text = "Distance:";
             // 
             // fndFacePic
             // 
             this.fndFacePic.Location = new System.Drawing.Point(68, 344);
-            this.fndFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.fndFacePic.Margin = new System.Windows.Forms.Padding(6);
             this.fndFacePic.Name = "fndFacePic";
             this.fndFacePic.Size = new System.Drawing.Size(356, 221);
             this.fndFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -428,7 +470,7 @@
             // capFacePic
             // 
             this.capFacePic.Location = new System.Drawing.Point(68, 79);
-            this.capFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.capFacePic.Margin = new System.Windows.Forms.Padding(6);
             this.capFacePic.Name = "capFacePic";
             this.capFacePic.Size = new System.Drawing.Size(356, 221);
             this.capFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -439,52 +481,34 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
-            // lb_distance
+            // avgFace
             // 
-            this.lb_distance.AutoSize = true;
-            this.lb_distance.Location = new System.Drawing.Point(67, 575);
-            this.lb_distance.Name = "lb_distance";
-            this.lb_distance.Size = new System.Drawing.Size(102, 25);
-            this.lb_distance.TabIndex = 4;
-            this.lb_distance.Text = "Distance:";
+            this.avgFace.Location = new System.Drawing.Point(67, 714);
+            this.avgFace.Margin = new System.Windows.Forms.Padding(6);
+            this.avgFace.Name = "avgFace";
+            this.avgFace.Size = new System.Drawing.Size(356, 221);
+            this.avgFace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.avgFace.TabIndex = 7;
+            this.avgFace.TabStop = false;
             // 
-            // findFaceToolStripMenuItem1
+            // libLabel
             // 
-            this.findFaceToolStripMenuItem1.Enabled = false;
-            this.findFaceToolStripMenuItem1.Name = "findFaceToolStripMenuItem1";
-            this.findFaceToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.F)));
-            this.findFaceToolStripMenuItem1.Size = new System.Drawing.Size(401, 38);
-            this.findFaceToolStripMenuItem1.Text = "Find Face";
-            this.findFaceToolStripMenuItem1.Click += new System.EventHandler(this.findFaceToolStripMenuItem1_Click);
-            // 
-            // lb_faceSpace
-            // 
-            this.lb_faceSpace.AutoSize = true;
-            this.lb_faceSpace.Location = new System.Drawing.Point(67, 604);
-            this.lb_faceSpace.Name = "lb_faceSpace";
-            this.lb_faceSpace.Size = new System.Drawing.Size(133, 25);
-            this.lb_faceSpace.TabIndex = 5;
-            this.lb_faceSpace.Text = "Face Space:";
-            // 
-            // lb_person
-            // 
-            this.lb_person.AutoSize = true;
-            this.lb_person.Location = new System.Drawing.Point(205, 310);
-            this.lb_person.Name = "lb_person";
-            this.lb_person.Size = new System.Drawing.Size(80, 25);
-            this.lb_person.TabIndex = 6;
-            this.lb_person.Text = "Person";
+            this.libLabel.AutoSize = true;
+            this.libLabel.Location = new System.Drawing.Point(67, 683);
+            this.libLabel.Name = "libLabel";
+            this.libLabel.Size = new System.Drawing.Size(146, 25);
+            this.libLabel.TabIndex = 8;
+            this.libLabel.Text = "Average Face";
             // 
             // FaceRecognition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2066, 1187);
+            this.ClientSize = new System.Drawing.Size(2010, 1175);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FaceRecognition";
             this.Text = "Facial Recognition - Spencer Pollock";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -504,6 +528,7 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fndFacePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.capFacePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.avgFace)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -550,6 +575,8 @@
         private System.Windows.Forms.ToolStripMenuItem findFaceToolStripMenuItem1;
         private System.Windows.Forms.Label lb_faceSpace;
         private System.Windows.Forms.Label lb_person;
+        private System.Windows.Forms.Label libLabel;
+        private System.Windows.Forms.PictureBox avgFace;
     }
 }
 
