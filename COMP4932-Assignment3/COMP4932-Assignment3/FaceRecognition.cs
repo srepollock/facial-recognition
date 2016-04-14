@@ -468,16 +468,16 @@ namespace COMP4932_Assignment3
 
             //rekt = objDet.ProcessFrame(img); // Gets the faces
 
-            /*
-            using (Graphics g = Graphics.FromImage(img))
-            {
-                Color color = Color.FromArgb(255, Color.Red);
-                Pen brush = new Pen(color);
-                rekt = objDet.ProcessFrame(img);
-                if(rekt.Length > 0)
-                    g.DrawRectangles(brush, rekt); // Draw the all the rectangles
-            }
-            */
+
+            //using (Graphics g = Graphics.FromImage(img))
+            //{
+            //    Color color = Color.FromArgb(255, Color.Red);
+            //    Pen brush = new Pen(color);
+            //    rekt = objDet.ProcessFrame(img);
+            //    if (rekt.Length > 0)
+            //        g.DrawRectangles(brush, rekt); // Draw the all the rectangles
+            //}
+
             pictureBox1.Image = img;
         }
 
@@ -561,9 +561,10 @@ namespace COMP4932_Assignment3
         private void findFaceToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             mainBmp = (Bitmap)capFacePic.Image;
+            mainBmp = ImageTool.ResizeImage(mainBmp, 256, 256);
             fndFacePic.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
-            ImageTool.SetImage(mainBmp, img);
+            ImageTool.SetImage(mainBmp, img); // Breaking here
             double[] weights = ImageTool.getWeights(eigFaces, img, avg);
             comp = ImageTool.compareWeigths(libWeights, weights);
             int p = ImageTool.smallestVal(comp);
