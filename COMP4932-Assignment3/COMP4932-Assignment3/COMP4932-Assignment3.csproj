@@ -23,9 +23,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,12 +48,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>technology.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -66,6 +68,12 @@
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B295C008E57212E33FAB8F397785BB563AA336A5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>COMP4932-Assignment3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
@@ -136,7 +144,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ILNumerics_deploy\ilnumerics.lic" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -145,6 +153,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="COMP4932-Assignment3_TemporaryKey.pfx" />
     <None Include="ILNumerics_deploy\ILNImports1.targets" />
     <None Include="ILNumerics_deploy\ILNImports2.targets" />
     <None Include="packages.config" />
@@ -180,7 +189,35 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Library\temp1.bmp" />
+    <Content Include="Assets\Library\temp10.bmp" />
+    <Content Include="Assets\Library\temp11.bmp" />
+    <Content Include="Assets\Library\temp12.bmp" />
+    <Content Include="Assets\Library\temp13.bmp" />
+    <Content Include="Assets\Library\temp14.bmp" />
+    <Content Include="Assets\Library\temp15.bmp" />
+    <Content Include="Assets\Library\temp16.bmp" />
+    <Content Include="Assets\Library\temp17.bmp" />
+    <Content Include="Assets\Library\temp18.bmp" />
+    <Content Include="Assets\Library\temp19.bmp" />
+    <Content Include="Assets\Library\temp2.bmp" />
+    <Content Include="Assets\Library\temp20.bmp" />
+    <Content Include="Assets\Library\temp21.bmp" />
+    <Content Include="Assets\Library\temp22.bmp" />
+    <Content Include="Assets\Library\temp23.bmp" />
+    <Content Include="Assets\Library\temp24.bmp" />
+    <Content Include="Assets\Library\temp25.bmp" />
+    <Content Include="Assets\Library\temp26.bmp" />
+    <Content Include="Assets\Library\temp27.bmp" />
+    <Content Include="Assets\Library\temp3.bmp" />
+    <Content Include="Assets\Library\temp4.bmp" />
+    <Content Include="Assets\Library\temp5.bmp" />
+    <Content Include="Assets\Library\temp6.bmp" />
+    <Content Include="Assets\Library\temp7.bmp" />
+    <Content Include="Assets\Library\temp8.bmp" />
+    <Content Include="Assets\Library\temp9.bmp" />
     <Content Include="Assets\technology.ico" />
+    <None Include="Resources\Image1.bmp" />
     <Content Include="technology.ico" />
   </ItemGroup>
   <ItemGroup>

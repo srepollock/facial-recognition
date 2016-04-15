@@ -4,14 +4,14 @@
     using COMP4932_Assignment3.ViolaJones.Detection;
     using System;
     using System.Drawing;
-    using System.IO;
     using System.Windows.Forms;
     using AForge.Video;
     using AForge.Video.DirectShow;
     using AForge.Imaging.Filters;
     using System.Threading.Tasks;
     using EigenFace;
-
+    using System.Resources;
+    using System.Linq;
     public partial class FaceRecognition : Form
     {
         /* Variables */
@@ -136,12 +136,15 @@
         public FaceRecognition()
         {
             InitializeComponent();
-            // Student code
-            mainBmp = new Bitmap(Image.FromFile("./imgLib/temp1.bmp")); // load in the first from the user
+            Bitmap bmp = Facial_Recognition.Properties.Resources.temp1;
+            //// Student code
+            mainBmp = bmp; // load in the first from the user // need to get the file from the resource
             mainPicture.Image = mainBmp;
-            double[,] img = ImageTool.GetGreyScale(mainBmp);
-            ImageTool.SetImage(mainBmp, img);
-            int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
+            //double[,] img = ImageTool.GetGreyScale(mainBmp);
+            double[,] img = ImageTool.GetArray(bmp);
+            //ImageTool.SetImage(mainBmp, img);
+            //int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
+            int libCount = LoadLibrary(IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
             avg = ImageTool.GetAvg(lib);
             difLib = ImageTool.GetDifferenceArray(lib, avg);
             libBmp = new Bitmap(IMG_WIDTH, IMAGE_HEIGHT);
@@ -180,21 +183,68 @@
         /// <param name="height"></param>
         /// <param name="subSet"></param>
         /// <returns></returns>
-        public int LoadLibrary(string directory, int width, int height, int subSet)
+        //public int LoadLibrary(string directory, int width, int height, int subSet)
+        //{
+        //    string[] images = Directory.GetFiles(@directory, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
+        //    if (subSet < 1)
+        //        subSet = 1;
+        //    lib = new double[images.Length][,];
+        //    int i = 0;
+        //    foreach (string image in images)
+        //    {
+        //        lib[i++] = ImageTool.GetArray(new Bitmap(image));
+        //    }
+        //    if (subSet > 1)
+        //        lib = ImageTool.avgSubsets(lib, subSet);
+        //    return images.Length / subSet;
+        //}
+
+        /// <summary>
+        /// Loads in the library for the faces
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="subSet"></param>
+        /// <returns></returns>
+        public int LoadLibrary(int width, int height, int subSet)
         {
-            string[] images = Directory.GetFiles(@directory, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
-            if (subSet < 1)
-                subSet = 1;
-            lib = new double[images.Length][,];
-            int i = 0;
-            foreach (string image in images)
+
+            //string[] images// = Directory.GetFiles(Facial_Recognition.Properties.Resources, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
+            ResourceManager rm = Facial_Recognition.Properties.Resources.ResourceManager;
+            ResourceSet rs= rm.GetResourceSet(new System.Globalization.CultureInfo("en-US"), true, true);
+            int count = 0;
+            if(rs != null)
             {
-                lib[i++] = ImageTool.GetArray(new Bitmap(image));
+                // we have some resources
+                var images =
+                    from entry in rs.Cast<System.Collections.DictionaryEntry>()
+                    where entry.Value is Image
+                    select entry.Value;
+
+                foreach(Bitmap img in images)
+                {
+                    count++;
+                }
+
+                if (subSet < 1)
+                    subSet = 1;
+                lib = new double[count][,];
+                int i = 0;
+                foreach (Bitmap image in images)
+                {
+                    lib[i++] = ImageTool.GetArray(new Bitmap(image));
+                }
+                if (subSet > 1)
+                    lib = ImageTool.avgSubsets(lib, subSet);
+                return count / subSet;
             }
-            if (subSet > 1)
-                lib = ImageTool.avgSubsets(lib, subSet);
-            return images.Length / subSet;
+            else
+            {
+                return 0;
+            }
+            
         }
+
 
         // TOOL STRIP
 
