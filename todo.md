@@ -1,6 +1,11 @@
 # TODO
 > Most of my TODO's for the project will be in the Visual Studio Task list.  This is just an overview of the projects to do
 
+## Personal
+> Personal todo for the project
+
+
+## School Assignment
 - [] Brute Force: **(20%)** 
     - Search the entire image, 256x256 rectangle, then check to see if that is a face
 - [x] Optimize face space: **(10%)**

@@ -1,54 +1,134 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using AForge.Video;
-using AForge.Video.DirectShow;
-using AForge.Imaging.Filters;
-using System.Threading.Tasks;
-
-namespace COMP4932_Assignment3
+﻿namespace COMP4932_Assignment3
 {
     using System.Diagnostics;
     using COMP4932_Assignment3.ViolaJones.Detection;
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using AForge.Video;
+    using AForge.Video.DirectShow;
+    using AForge.Imaging.Filters;
+    using System.Threading.Tasks;
+    using EigenFace;
+
     public partial class FaceRecognition : Form
     {
-        /// <summary>
-        /// Data object for the class. Contains information.
-        /// </summary>
-        Data dataObj;
-        /// <summary>
-        /// Timer for the GIF image.
-        /// </summary>
-        Timer grayTicker = new Timer();
-        Timer diffTicker = new Timer();
+        /* Variables */
         // Video Capture Devices
+
+        /// <summary>
+        /// Bool for if the camera device exists or not.
+        /// </summary>
         private bool DeviceExist = false;
+
+        /// <summary>
+        /// All the video devices in a collection.
+        /// </summary>
         private FilterInfoCollection videoDevices;
+
+        /// <summary>
+        /// The video capture device.
+        /// </summary>
         private VideoCaptureDevice videoSource = null;
+
         // Face Recognition
+
+        /// <summary>
+        /// Object detection with HarrObjectDetector.
+        /// </summary>
         HaarObjectDetector objDet = new HaarObjectDetector(new ViolaJones.Detection.HaarCascade.Def.FaceHaarCascade(), 30);
+
+        /// <summary>
+        /// The rectangles found in an array.
+        /// </summary>
         Rectangle[] rekt;
 
         // EigenStuff
-        public const double SAME_FACE_THRESH = 7.8;
-        public const double FACE_THRESH = 16000;
+
+        /// <summary>
+        /// A threshold to check if we found the same face.
+        /// </summary>
+        public const double SAME_FACE_THRESH = 7.7;
+
+        /// <summary>
+        /// Face threshold, check to see if the face is within a reasonable face space.
+        /// </summary>
+        public const double FACE_THRESH = 20000;
+
+        /// <summary>
+        /// Constants for the regular, difference and eigen values.
+        /// </summary>
         public const int REGULAR = 0, DIFFERENCE = 1, EIGEN = 2;
+
+        /// <summary>
+        /// The number of faces per person.
+        /// </summary>
+        /// <remarks>
+        /// Changes here effect the library. Increasing or decreasing will require a refreshed library of faces.
+        /// </remarks>
         public const int FACES_PER_PERSON = 3;
+
+        /// <summary>
+        /// Constants for the image width to pass into the previous student's code.
+        /// </summary>
         public const int IMG_WIDTH = 256, IMAGE_HEIGHT = 256;
+
+        /// <summary>
+        /// Image library of faces. Determined by the value and a double array of the 'image' in double 2D array format.
+        /// </summary>
         public double[][,] lib;
+
+        /// <summary>
+        /// Differences of all the images in the library compared to the current picture.
+        /// </summary>
         public double[][,] difLib;
+
+        /// <summary>
+        /// Stores the eigen faces of the current difLib data arrays.
+        /// </summary>
         public double[][,] eigFaces;
+
+        /// <summary>
+        /// Average face as double 2D array.
+        /// </summary>
         public double[,] avg;
+
+        /// <summary>
+        /// Reconstructed face from the library and the eigen face of the current face.
+        /// </summary>
         public double[,] recon;
+
+        /// <summary>
+        /// Double array of the libraries weights to the current image.
+        /// </summary>
         public double[][] libWeights;
+
+        /// <summary>
+        /// Compared weights of the image to those in the library.
+        /// </summary>
         public double[] comp;
+
+        /// <summary>
+        /// Index of the found face to dispaly, if found.
+        /// </summary>
         public int display;
+
+        /// <summary>
+        /// Main bitmap to store the current found face.
+        /// </summary>
         public Bitmap mainBmp;
+
+        /// <summary>
+        /// Library bitmap, usually the reconstructed face.
+        /// </summary>
         public Bitmap libBmp;
+
+        /// <summary>
+        /// Current face space.
+        /// </summary>
         public double faceSpace;
+        /* End of Variables */
 
         /// <summary>
         /// Called when the class is loaded up.
@@ -56,11 +136,9 @@ namespace COMP4932_Assignment3
         public FaceRecognition()
         {
             InitializeComponent();
-            grayTicker.Tick += new System.EventHandler(gifGrayPlay);
-            diffTicker.Tick += new System.EventHandler(gifDiffPlay);
             // Student code
-            mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
-            pictureBox1.Image = mainBmp;
+            mainBmp = new Bitmap(Image.FromFile("./imgLib/temp1.bmp")); // load in the first from the user
+            mainPicture.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
             ImageTool.SetImage(mainBmp, img);
             int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
@@ -89,7 +167,7 @@ namespace COMP4932_Assignment3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void FaceRecognition_Close(object sender, FormClosedEventArgs e)
         {
             CloseVideoSource();
         }
@@ -118,94 +196,143 @@ namespace COMP4932_Assignment3
             return images.Length / subSet;
         }
 
+        // TOOL STRIP
+
+        // TODO Thread this function. Can take a long time on the UI for hi-res
+        // TODO Update progress bar for the image
         /// <summary>
-        /// Show help in GitHub README
+        /// 
         /// </summary>
-        /// <remarks>
-        /// Or show README in rich textbox
-        /// </remarks>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
+        private void captureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            /********************/
+            /*Find the best face*/
+            // This is among our rectangles
+            Bitmap org = (Bitmap)mainPicture.Image; // Take the current image in the picturebox
+            double min = double.MaxValue; // Minimum value
+            Rectangle ripp = new Rectangle();
+            try // just in case
+            {
+                rekt = processTheImage(org); // Process the current image and get all the 'faces' in it
+                if (rekt.Length >= 1) // We found at least one
+                {
+                    // Now find the best face
+                    for (int i = 0; i < rekt.Length; i++)
+                    {
+                        // Get a copy of the image in the box
+                        Rectangle rectTemp = rekt[i]; // Copy, we need to inflate the rectangle
+                        rectTemp.Inflate(4, 4); // Inflate a bit, we have to resize anyways
+                        Bitmap temp = org.Clone(rectTemp, org.PixelFormat); // Get a copy of what is inside the box // may need to rescale
+                        double[,] tempAr = ImageTool.GetArray(temp); // Change the temp bitmap into a double 2D array
+                        // Already grayscaled
+                        double[] w = ImageTool.getWeights(eigFaces, tempAr, avg); // Gets the weights of the current selected face. eigFaces and avg are setup from the library
+                        double[] compW = ImageTool.compareWeigths(libWeights, w); // Compare all the weights in the library with their images and the weights of the current image
+                        int p = ImageTool.smallestVal(compW); // Gets the face that has the smallest weight
+                        if (compW[p] < SAME_FACE_THRESH)
+                        {
+                            // Possible face
+                            if (compW[p] < min)
+                            {
+                                ripp = rectTemp; // Inflated rect
+                            }
+                        }
+                    }
+                    if (!ripp.IsEmpty) // We actually have one
+                    {
+                        ripp.Inflate(20, 20);
+                        //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
+                        Bitmap img = org.Clone(ripp, org.PixelFormat);
+                        Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+                        img = filter.Apply(img);
+                        img = ImageTool.ResizeImage(img, 256, 256);
+                        capFacePic.Image = img;
+                        findToolStripMenuItem.Enabled = true;
+                        addToolStripMenuItem.Enabled = true;
+                    }
+                }
+            }
+            catch (Exception trollception)
+            {
+                Debug.WriteLine(trollception.ToString());
+                Debug.WriteLine("Something went wrong with finding the face."); // Print something pretty troll
+            }
         }
+
+        // TODO Update progress bar on status of finding
+        /// <summary>
+        /// Finds the face in the toolstrip
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainBmp = (Bitmap)capFacePic.Image;
+            mainBmp = ImageTool.ResizeImage(mainBmp, 256, 256);
+            double[,] img = ImageTool.GetGreyScale(mainBmp);
+            ImageTool.SetImage(mainBmp, img); // Breaking here
+            double[] weights = ImageTool.getWeights(eigFaces, img, avg);
+            comp = ImageTool.compareWeigths(libWeights, weights);
+            int p = ImageTool.smallestVal(comp);
+            if (comp[p] > SAME_FACE_THRESH)
+            {
+                lb_person.Text = "Person: Unknown";
+            }
+            else
+            {
+                lb_person.Text = "Person: " + p;
+            }
+            recon = ImageTool.reconstruct(weights, eigFaces, avg);
+            ImageTool.SetImage(libBmp, lib[p]);
+            fndFacePic.Image = libBmp;
+            lb_distance.Text = "Distance : " + comp[p];
+            faceSpace = ImageTool.difference(img, recon);
+            lb_faceSpace.Text = "Face Space : " + faceSpace;
+            if (faceSpace > FACE_THRESH)
+            {
+                lb_faceSpace.Text += "... Not a face";
+            }
+        }
+
+        /// <summary>
+        /// Adds a face to the testbank.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Currently Disabled. Please read up about it at 'http://github.com/srepollock/comp4932-assignment3/wiki'"); // TODO Update wiki // TODO Update website name when changed
+        }
+
+        /// <summary>
+        /// Opens up the readme file in GitHub for how the program works.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.github.com/srepollock/comp4932-assignment3"); // TODO Update when the Github changes
+        }
+
+        // MAIN FUNCTIONALITY
 
         /// <summary>
         /// Basic function calls called on program startup, or reopening.
         /// </summary>
         void startup()
         {
-            dataObj = new Data();
-            disableButtons();
-            stopTickers();
-            clearBoxes();
+            disableButtons(false);
         }
 
         /// <summary>
-        /// Open a file.
+        /// Turns buttons on/off.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        void disableButtons(bool change)
         {
-            startup();
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "JPG Files|*.jpg|GIF Files|*.gif|PNG Files|*.png|BMP Files|*.bmp|All Files|*.*";
-            DialogResult result = openFileDialog1.ShowDialog(); // I want to open this to the child window in the file
-            if (result == DialogResult.OK) // checks if the result returned true
-            {
-                string ext = Path.GetExtension(openFileDialog1.FileName); // includes the period
-                if (ext == ".jpg")
-                {
-                    dataObj.images.Add((Bitmap)Bitmap.FromFile(openFileDialog1.FileName));
-                    pictureBox1.Image = (Image)dataObj.images.ElementAt(0);
-
-                    OpenFileDialog openFileDialog2 = new OpenFileDialog();
-                    openFileDialog2.Filter = "JPG Files|*.jpg|PNG Files|*.png|BMP Files|*.bmp|All Files|*.*";
-                    DialogResult result2 = openFileDialog2.ShowDialog(); // I want to open this to the child window in the file
-                    if (result2 == DialogResult.OK) // checks if the result returned true
-                    {
-                        string ext2 = Path.GetExtension(openFileDialog2.FileName); // includes the period
-                        if (ext == ".jpg")
-                        {
-                            dataObj.images.Add((Bitmap)Bitmap.FromFile(openFileDialog2.FileName));
-                            pictureBox2.Image = (Image)dataObj.images.ElementAt(1);
-                            jPEGToolStripMenuItem.Enabled = true; // Enables JPEG Grayscale
-                        }
-                        else
-                        {
-                            MessageBox.Show("Only jpg's are accepted for the second image.");
-                        }
-                    }
-                }
-                else
-                {
-                    getFrames(openFileDialog1.FileName);
-                    pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
-                    gIFToolStripMenuItem1.Enabled = true; // Enables GIF Grayscale
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disables Grayscale, Difference buttons.
-        /// </summary>
-        void disableButtons()
-        {
-            jPEGToolStripMenuItem.Enabled = false;
-            jPEGToolStripMenuItem1.Enabled = false;
-            gIFToolStripMenuItem1.Enabled = false;
-            gIFToolStripMenuItem2.Enabled = false;
-        }
-
-        /// <summary>
-        /// Stops all tickers.
-        /// </summary>
-        void stopTickers()
-        {
-            grayTicker.Stop();
-            diffTicker.Stop();
+            captureToolStripMenuItem.Enabled = change;
+            findToolStripMenuItem.Enabled = change;
+            addToolStripMenuItem.Enabled = false; // TODO Get adding faces working for the '.exe' version
         }
 
         /// <summary>
@@ -213,9 +340,7 @@ namespace COMP4932_Assignment3
         /// </summary>
         void clearBoxes()
         {
-            pictureBox1.Image = null;
-            pictureBox2.Image = null;
-            pictureBox3.Image = null;
+            mainPicture.Image = null;
         }
 
         /// <summary>
@@ -227,140 +352,6 @@ namespace COMP4932_Assignment3
         {
             Bitmap g = ImageTool.grayscale(i);
             return g;
-        }
-
-        /// <summary>
-        /// Gets the frames from GIF file. Saves it into the images array.
-        /// </summary>
-        /// <param name="FileName">Path to the .gif file</param>
-        void getFrames(String FileName)
-        {
-            Image gif = Image.FromFile(FileName);
-            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
-            int framecount = gif.GetFrameCount(dimension);
-            for(int i = 0; i < framecount; i++)
-            {
-                gif.SelectActiveFrame(dimension, i); // Selects the frame
-                dataObj.images.Add((Bitmap)gif.Clone()); // Adds the image to the list
-            }
-        }
-        
-        /// <summary>
-        /// Doesn't do anything.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-        
-        /// <summary>
-        /// Doesn't do anything.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void differenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        /// <summary>
-        /// Grayscales the two images saved in the Data Object. JPEG GRAY
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void jPEGToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(0)));
-            pictureBox1.Image = (Image)dataObj.grayscales.ElementAt(0);
-            dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(1)));
-            pictureBox2.Image = (Image)dataObj.grayscales.ElementAt(1);
-            jPEGToolStripMenuItem1.Enabled = true; // Diff JPEG
-        }
-
-        /// <summary>
-        /// Grayscales the gif image. GIF GRAY
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void gIFToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            for(int i = 0; i < dataObj.images.Count; i++)
-            {
-                dataObj.grayscales.Add(grayscaleImage(dataObj.images.ElementAt(i)));
-            }
-            dataObj.setupGifGrayArray();
-            grayTicker.Start();
-            gIFToolStripMenuItem2.Enabled = true; // Diff GIF
-        }
-
-        /// <summary>
-        /// Gets the difference between the two jpeg images. JPEG DIFF
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void jPEGToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            dataObj.diffs.Add(ImageTool.getDifference(0, ref dataObj));
-            pictureBox3.Image = dataObj.diffs.ElementAt(0);
-        }
-
-        /// <summary>
-        /// Gets the difference between each frame in the gif. GIF DIFF
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void gIFToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            for(int i = 0; i < dataObj.images.Count; i++)
-            {
-                dataObj.diffs.Add(ImageTool.getDifference(i, ref dataObj));
-            }
-            dataObj.setupGifDiffArray();
-            diffTicker.Start();
-        }
-
-        /// <summary>
-        /// Called when the combo box changes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Called when the combo box is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Ticker function to play the grayscale image.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void gifGrayPlay(Object sender, EventArgs e)
-        {
-            if (dataObj.curgimage >= dataObj.gifgrayarray.Length) dataObj.curgimage = 0;
-            pictureBox2.Image = dataObj.gifgrayarray[dataObj.curgimage++];
-        }
-
-        /// <summary>
-        /// Ticker function to play the diff image.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void gifDiffPlay(Object sender, EventArgs e)
-        {
-            if (dataObj.curdimage >= dataObj.gifgrayarray.Length) dataObj.curdimage = 0;
-            pictureBox3.Image = dataObj.gifdiffsarray[dataObj.curdimage++];
         }
 
         /// <summary>
@@ -433,7 +424,7 @@ namespace COMP4932_Assignment3
                     videoInfo.Text = "Device running...";
                     start.Text = "&Stop";
                     timer1.Enabled = true;
-                    captureFaceToolStripMenuItem.Enabled = true;
+                    captureToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
@@ -448,7 +439,7 @@ namespace COMP4932_Assignment3
                     CloseVideoSource();
                     videoInfo.Text = "Device stopped.";
                     start.Text = "&Start";
-                    captureFaceToolStripMenuItem.Enabled = false;
+                    disableButtons(false);
                 }
             }
         }
@@ -470,7 +461,7 @@ namespace COMP4932_Assignment3
                 if (rekt.Length > 0)
                     g.DrawRectangles(brush, rekt); // Draw the all the rectangles
             }*/
-            pictureBox1.Image = img;
+            mainPicture.Image = img;
         }
 
         /// <summary>
@@ -501,7 +492,7 @@ namespace COMP4932_Assignment3
         /// </summary>
         /// <param name="img"></param>
         /// <returns></returns>
-        private Rectangle[] processDatImage(Bitmap img)
+        private Rectangle[] processTheImage(Bitmap img)
         {
             try
             {
@@ -513,102 +504,9 @@ namespace COMP4932_Assignment3
             catch(Exception trollception)
             {
                 Debug.WriteLine(trollception.ToString());
-                Debug.WriteLine("kappabilities of the image not found."); // Print something pretty troll
+                Debug.WriteLine("Something went wrong. Possible task error, or no faces found as a result."); // Print something pretty troll
             }
             return null;
-        }
-
-        /// <summary>
-        /// Take a photo of the first selected face.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void captureFaceToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            /********************/
-            /*Find the best face*/
-                // This is among our rectangles
-            Bitmap org = (Bitmap)pictureBox1.Image; // Take the current image in the picturebox
-            double min = double.MaxValue; // Minimum value
-            Rectangle ripp = new Rectangle();
-            try // just in case
-            {
-                rekt = processDatImage(org); // Process the current image and get all the 'faces' in it
-                if(rekt.Length >= 1) // We found at least one
-                {
-                    // Now find the best face
-                    for(int i = 0; i < rekt.Length; i++)
-                    {
-                        // Get a copy of the image in the box
-                        Rectangle rectTemp = rekt[i]; // Copy, we need to inflate the rectangle
-                        rectTemp.Inflate(20, 20); // Inflate a bit, we have to resize anyways
-                        Bitmap temp = org.Clone(rectTemp, org.PixelFormat); // Get a copy of what is inside the box // may need to rescale
-                        double[,] tempAr = ImageTool.GetArray(temp); // Change the temp bitmap into a double 2D array
-                        // Already grayscaled
-                        double[] w = ImageTool.getWeights(eigFaces, tempAr, avg); // Gets the weights of the current selected face. eigFaces and avg are setup from the library
-                        double[] compW = ImageTool.compareWeigths(libWeights, w); // Compare all the weights in the library with their images and the weights of the current image
-                        int p = ImageTool.smallestVal(compW); // Gets the face that has the smallest weight
-                        if(compW[p] < SAME_FACE_THRESH)
-                        {
-                            // Possible face
-                            if(compW[p] < min)
-                            {
-                                ripp = rectTemp; // Inflated rect
-                            }
-                        }
-                    }
-                    if (!ripp.IsEmpty) // We actually have one
-                    {
-                        ripp.Inflate(20, 20);
-                        //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
-                        Bitmap img = org.Clone(ripp, org.PixelFormat);
-                        Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
-                        img = filter.Apply(img);
-                        img = ImageTool.ResizeImage(img, 256, 256);
-                        capFacePic.Image = img;
-                        findFaceToolStripMenuItem1.Enabled = true;
-                    }
-                }
-            }
-            catch(Exception trollception)
-            {
-                Debug.WriteLine(trollception.ToString());
-                Debug.WriteLine("kappabilities of the image not found."); // Print something pretty troll
-            }
-        }
-
-        /// <summary>
-        /// Finds the face in the capFacePick picture box.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void findFaceToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            mainBmp = (Bitmap)capFacePic.Image;
-            mainBmp = ImageTool.ResizeImage(mainBmp, 256, 256);
-            double[,] img = ImageTool.GetGreyScale(mainBmp);
-            ImageTool.SetImage(mainBmp, img); // Breaking here
-            double[] weights = ImageTool.getWeights(eigFaces, img, avg);
-            comp = ImageTool.compareWeigths(libWeights, weights);
-            int p = ImageTool.smallestVal(comp);
-            if (comp[p] > SAME_FACE_THRESH)
-            {
-                lb_person.Text = "Person: Unknown";
-            }
-            else
-            {
-                lb_person.Text = "Person: " + p;
-            }
-            recon = ImageTool.reconstruct(weights, eigFaces, avg);
-            ImageTool.SetImage(libBmp, lib[p]);
-            fndFacePic.Image = libBmp;
-            lb_distance.Text = "Distance : " + comp[p];
-            faceSpace = ImageTool.difference(img, recon);
-            lb_faceSpace.Text = "Face Space : " + faceSpace;
-            if (faceSpace > FACE_THRESH)
-            {
-                lb_faceSpace.Text += "... Not a face";
-            }
         }
     }
 }

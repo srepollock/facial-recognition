@@ -1,6 +1,7 @@
 # Changelog
 > YYYY-MM-DD HH:MM {Changes}
 
+2016-04-15 01:52 Cleane up UI. RELEASE v1.0!
 2016-04-13 19:30 Added student's code and and finding the face comparing the face space
 2016-04-12 11:23 Using Viola-Jones method/library to find the face
 2016-04-11 09:33 Using AForge to get the video camera

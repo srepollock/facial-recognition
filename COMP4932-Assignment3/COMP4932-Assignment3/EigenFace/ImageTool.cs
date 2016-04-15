@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ILNumerics;
-
-namespace COMP4932_Assignment3
+﻿namespace EigenFace
 {
+    using System;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
+    using ILNumerics;
+
+    /// <summary>
+    /// Basic image tools defined by the preivous students to use Eigen Faces.
+    /// </summary>
     public static class ImageTool
     {
+        /// <summary>
+        /// Gets a grayscale of the image into a double 2D array format.
+        /// </summary>
+        /// <param name="bmp">Bitmap to be passed in.</param>
+        /// <returns>Double 2D array of the image.</returns>
         public static double[,] GetGreyScale(Bitmap bmp)
         {
             double[,] result = new double[bmp.Height, bmp.Width];
@@ -30,8 +33,8 @@ namespace COMP4932_Assignment3
         /// <summary>
         /// Gets the grayscale bitmap of the bitmap passed in.
         /// </summary>
-        /// <param name="orgBmp">Bitmap to grayscale</param>
-        /// <returns>Grayscaled image</returns>
+        /// <param name="orgBmp">Bitmap to grayscale.</param>
+        /// <returns>Grayscaled image.</returns>
         public static Bitmap grayscale(Bitmap orgBmp)
         {
             int width = orgBmp.Width, height = orgBmp.Height;
@@ -118,7 +121,6 @@ namespace COMP4932_Assignment3
             }
         }
 
-        // TODO Use this funciton when passing in the face snapshot
         /// <summary>
         /// Gets the eigen object from the bitmap.
         /// </summary>
@@ -164,7 +166,6 @@ namespace COMP4932_Assignment3
             return new EigenObject(eigVectors, eigValues, width);
         }
 
-        // TODO Get the average face of the library
         /// <summary>
         /// Gets the average face of the library.
         /// </summary>
@@ -209,7 +210,6 @@ namespace COMP4932_Assignment3
             return dif;
         }
 
-        // TODO Is this function for each individual image?
         /// <summary>
         /// Gets the differences of the libraries images, and the average face.
         /// </summary>
@@ -279,7 +279,6 @@ namespace COMP4932_Assignment3
             return result;
         }
 
-        // TODO What do I do with this?
         /// <summary>
         /// Get the eigen faces in the difFaces.
         /// </summary>
@@ -306,7 +305,6 @@ namespace COMP4932_Assignment3
             return eFaces;
         }
 
-        // TODO This gets the weight of the image in the facespace? How useable it is?
         /// <summary>
         /// Gets the weights of the faces, based on the test face and the average face compared to the whole array
         /// </summary>
@@ -339,7 +337,6 @@ namespace COMP4932_Assignment3
             return weights;
         }
 
-        // TODO Recreates the image face based on the image
         /// <summary>
         /// Recreate the face based on the weights, eigen faces and average face.
         /// </summary>
@@ -526,34 +523,7 @@ namespace COMP4932_Assignment3
             result = Math.Sqrt(result);
             return result;
         }
-
-        /// <summary>
-        /// Gets the differences of between the frams at frame i and i+1
-        /// </summary>
-        /// <param name="i">Index where to grab the frames</param>
-        /// <returns>Bitmap of the differences</returns>
-        public static Bitmap getDifference(int i, ref Data data)
-        {
-            Bitmap f = data.grayscales.ElementAt(i);
-            Bitmap l;
-            if (i + 1 >= data.grayscales.Count) l = data.grayscales.ElementAt(0); // Next image
-            else l = data.grayscales.ElementAt(i + 1); // Next image
-            if (f.Width != l.Width) { MessageBox.Show("Images must be the same width!"); return null; }
-            Bitmap diff = new Bitmap(f.Width, f.Height);
-            for (int x = 0; x < f.Width; x++)
-            {
-                for (int y = 0; y < f.Height; y++)
-                {
-                    int fp = (int)f.GetPixel(x, y).R;
-                    int lp = (int)l.GetPixel(x, y).R;
-                    int dp = fp - lp; // Get pixel, minus first from last
-                    if (dp < data.threshold) dp = 0; // Threshold
-                    diff.SetPixel(x, y, Color.FromArgb(255, dp, dp, dp));
-                }
-            }
-            return diff;
-        }
-
+        
         /// <summary>
         /// Resize the image to the specified width and height.
         /// </summary>
