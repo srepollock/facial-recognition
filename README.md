@@ -17,30 +17,32 @@ Face recognizer program. This is a program that uses your computers webcam to fi
 * [License](#license)
 
 # Controls
-1. Ctrl-Shift-C : Finds the best face in the image (the one that looks like the best face)
-2. Ctrl-Shift-F : Finds the face that we captured in the face [library*](#library) and displays the recration of it.
+1. Ctrl-C : Finds the best face in the image (the one that looks like the best face)
+2. Ctrl-F : Finds the face that we captured in the face [library*](#library) and displays the recration of it.
 
 # Usage
 
-## Adding faces
+## Adding faces**
 > You will need to complete this 3 times, having your face within the box.
 > - Top of the head at the top of the box
 > - Bottom of the chin at the bottom
 > - Equal gaps on both sides of the head  
 
-1. First capture the face with [Ctrl-Shift-C](#controls)
-2. Add the face to the library with [Ctrl-Shift-F](#controls)
+1. First capture the face with [Ctrl-C](#controls)
+2. Add the face to the library with [Ctrl-F](#controls)
 3. Name the file `tempXX.bmp` where `XX` is the next number in the series of images  
 
 [FAQ](#faq)
+
+> **Feature is not yet implemented into the program.
 
 ## Finding faces
 1. Refresh the cameras in the list.
     - This will get all the webcams/cameras currently plugged in
 2. Select a resolution from the dropdown below it
     - Fastest results is to use a lower resolution as it is faster at finding the faces
-3. First capture the face with [Ctrl-Shift-C](#controls)
-4. Then test if the found face is in the [library*](#library) using [Ctrl-Shift-F](#controls)
+3. First capture the face with [Ctrl-C](#controls)
+4. Then test if the found face is in the [library*](#library) using [Ctrl-F](#controls)
     - It will then display the found face & average face reconstructed.  
 
 # FAQ
