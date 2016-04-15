@@ -75,7 +75,8 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1132, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.menuStrip1.Size = new System.Drawing.Size(2264, 44);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,7 +85,7 @@
             this.captureToolStripMenuItem.Enabled = false;
             this.captureToolStripMenuItem.Name = "captureToolStripMenuItem";
             this.captureToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.captureToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.captureToolStripMenuItem.Size = new System.Drawing.Size(111, 36);
             this.captureToolStripMenuItem.Text = "&Capture";
             this.captureToolStripMenuItem.Click += new System.EventHandler(this.captureToolStripMenuItem_Click);
             // 
@@ -93,7 +94,7 @@
             this.findToolStripMenuItem.Enabled = false;
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
             this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(73, 36);
             this.findToolStripMenuItem.Text = "&Find";
             this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
@@ -102,7 +103,7 @@
             this.addToolStripMenuItem.Enabled = false;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(70, 36);
             this.addToolStripMenuItem.Text = "&Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
@@ -110,7 +111,7 @@
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(77, 36);
             this.helpToolStripMenuItem.Text = "&Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
@@ -124,11 +125,12 @@
             this.tableLayoutPanel1.Controls.Add(this.panel2, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.mainPanel, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 44);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1132, 519);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2264, 1000);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -139,28 +141,30 @@
             this.panel1.Controls.Add(this.refCamera);
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Location = new System.Drawing.Point(6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(166, 513);
+            this.panel1.Size = new System.Drawing.Size(332, 988);
             this.panel1.TabIndex = 0;
             // 
             // videoInfo
             // 
             this.videoInfo.AutoSize = true;
             this.videoInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.videoInfo.Location = new System.Drawing.Point(0, 500);
-            this.videoInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.videoInfo.Location = new System.Drawing.Point(0, 963);
+            this.videoInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.videoInfo.Name = "videoInfo";
-            this.videoInfo.Size = new System.Drawing.Size(62, 13);
+            this.videoInfo.Size = new System.Drawing.Size(119, 25);
             this.videoInfo.TabIndex = 3;
             this.videoInfo.Text = "Device Info";
             // 
             // start
             // 
             this.start.Dock = System.Windows.Forms.DockStyle.Top;
-            this.start.Location = new System.Drawing.Point(0, 69);
+            this.start.Location = new System.Drawing.Point(0, 118);
+            this.start.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.start.Name = "start";
-            this.start.Size = new System.Drawing.Size(166, 27);
+            this.start.Size = new System.Drawing.Size(332, 52);
             this.start.TabIndex = 4;
             this.start.Text = "&Start";
             this.start.UseVisualStyleBackColor = true;
@@ -170,19 +174,19 @@
             // 
             this.comboBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(0, 48);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBox2.Location = new System.Drawing.Point(0, 85);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(166, 21);
+            this.comboBox2.Size = new System.Drawing.Size(332, 33);
             this.comboBox2.TabIndex = 2;
             // 
             // refCamera
             // 
             this.refCamera.Dock = System.Windows.Forms.DockStyle.Top;
-            this.refCamera.Location = new System.Drawing.Point(0, 21);
-            this.refCamera.Margin = new System.Windows.Forms.Padding(2);
+            this.refCamera.Location = new System.Drawing.Point(0, 33);
+            this.refCamera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.refCamera.Name = "refCamera";
-            this.refCamera.Size = new System.Drawing.Size(166, 27);
+            this.refCamera.Size = new System.Drawing.Size(332, 52);
             this.refCamera.TabIndex = 1;
             this.refCamera.Text = "&Refresh Camera";
             this.refCamera.UseVisualStyleBackColor = true;
@@ -193,9 +197,9 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(166, 21);
+            this.comboBox1.Size = new System.Drawing.Size(332, 33);
             this.comboBox1.TabIndex = 0;
             // 
             // panel2
@@ -210,28 +214,30 @@
             this.panel2.Controls.Add(this.capFacePic);
             this.panel2.Controls.Add(this.capFaceLabel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(871, 3);
+            this.panel2.Location = new System.Drawing.Point(1743, 6);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(258, 513);
+            this.panel2.Size = new System.Drawing.Size(515, 988);
             this.panel2.TabIndex = 2;
             // 
             // libLabel
             // 
             this.libLabel.AutoSize = true;
             this.libLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.libLabel.Location = new System.Drawing.Point(0, 410);
-            this.libLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.libLabel.Location = new System.Drawing.Point(0, 788);
+            this.libLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.libLabel.Name = "libLabel";
-            this.libLabel.Size = new System.Drawing.Size(74, 13);
+            this.libLabel.Size = new System.Drawing.Size(146, 25);
             this.libLabel.TabIndex = 8;
             this.libLabel.Text = "Average Face";
             // 
             // avgFace
             // 
             this.avgFace.Dock = System.Windows.Forms.DockStyle.Top;
-            this.avgFace.Location = new System.Drawing.Point(0, 295);
+            this.avgFace.Location = new System.Drawing.Point(0, 567);
+            this.avgFace.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.avgFace.Name = "avgFace";
-            this.avgFace.Size = new System.Drawing.Size(258, 115);
+            this.avgFace.Size = new System.Drawing.Size(515, 221);
             this.avgFace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.avgFace.TabIndex = 7;
             this.avgFace.TabStop = false;
@@ -240,10 +246,10 @@
             // 
             this.lb_faceSpace.AutoSize = true;
             this.lb_faceSpace.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lb_faceSpace.Location = new System.Drawing.Point(0, 282);
-            this.lb_faceSpace.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lb_faceSpace.Location = new System.Drawing.Point(0, 542);
+            this.lb_faceSpace.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_faceSpace.Name = "lb_faceSpace";
-            this.lb_faceSpace.Size = new System.Drawing.Size(68, 13);
+            this.lb_faceSpace.Size = new System.Drawing.Size(133, 25);
             this.lb_faceSpace.TabIndex = 5;
             this.lb_faceSpace.Text = "Face Space:";
             // 
@@ -251,19 +257,20 @@
             // 
             this.lb_distance.AutoSize = true;
             this.lb_distance.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lb_distance.Location = new System.Drawing.Point(0, 269);
-            this.lb_distance.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lb_distance.Location = new System.Drawing.Point(0, 517);
+            this.lb_distance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_distance.Name = "lb_distance";
-            this.lb_distance.Size = new System.Drawing.Size(52, 13);
+            this.lb_distance.Size = new System.Drawing.Size(102, 25);
             this.lb_distance.TabIndex = 4;
             this.lb_distance.Text = "Distance:";
             // 
             // fndFacePic
             // 
             this.fndFacePic.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fndFacePic.Location = new System.Drawing.Point(0, 154);
+            this.fndFacePic.Location = new System.Drawing.Point(0, 296);
+            this.fndFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.fndFacePic.Name = "fndFacePic";
-            this.fndFacePic.Size = new System.Drawing.Size(258, 115);
+            this.fndFacePic.Size = new System.Drawing.Size(515, 221);
             this.fndFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fndFacePic.TabIndex = 3;
             this.fndFacePic.TabStop = false;
@@ -272,10 +279,10 @@
             // 
             this.lb_person.AutoSize = true;
             this.lb_person.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lb_person.Location = new System.Drawing.Point(0, 141);
-            this.lb_person.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lb_person.Location = new System.Drawing.Point(0, 271);
+            this.lb_person.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_person.Name = "lb_person";
-            this.lb_person.Size = new System.Drawing.Size(40, 13);
+            this.lb_person.Size = new System.Drawing.Size(80, 25);
             this.lb_person.TabIndex = 6;
             this.lb_person.Text = "Person";
             // 
@@ -283,18 +290,20 @@
             // 
             this.fndFaceLabel.AutoSize = true;
             this.fndFaceLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fndFaceLabel.Location = new System.Drawing.Point(0, 128);
+            this.fndFaceLabel.Location = new System.Drawing.Point(0, 246);
+            this.fndFaceLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.fndFaceLabel.Name = "fndFaceLabel";
-            this.fndFaceLabel.Size = new System.Drawing.Size(64, 13);
+            this.fndFaceLabel.Size = new System.Drawing.Size(127, 25);
             this.fndFaceLabel.TabIndex = 2;
             this.fndFaceLabel.Text = "Found Face";
             // 
             // capFacePic
             // 
             this.capFacePic.Dock = System.Windows.Forms.DockStyle.Top;
-            this.capFacePic.Location = new System.Drawing.Point(0, 13);
+            this.capFacePic.Location = new System.Drawing.Point(0, 25);
+            this.capFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.capFacePic.Name = "capFacePic";
-            this.capFacePic.Size = new System.Drawing.Size(258, 115);
+            this.capFacePic.Size = new System.Drawing.Size(515, 221);
             this.capFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.capFacePic.TabIndex = 0;
             this.capFacePic.TabStop = false;
@@ -304,8 +313,9 @@
             this.capFaceLabel.AutoSize = true;
             this.capFaceLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.capFaceLabel.Location = new System.Drawing.Point(0, 0);
+            this.capFaceLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.capFaceLabel.Name = "capFaceLabel";
-            this.capFaceLabel.Size = new System.Drawing.Size(77, 13);
+            this.capFaceLabel.Size = new System.Drawing.Size(154, 25);
             this.capFaceLabel.TabIndex = 1;
             this.capFaceLabel.Text = "Captured Face";
             // 
@@ -313,17 +323,19 @@
             // 
             this.mainPanel.Controls.Add(this.mainPicture);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(175, 3);
+            this.mainPanel.Location = new System.Drawing.Point(350, 6);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(690, 513);
+            this.mainPanel.Size = new System.Drawing.Size(1381, 988);
             this.mainPanel.TabIndex = 3;
             // 
             // mainPicture
             // 
             this.mainPicture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPicture.Location = new System.Drawing.Point(0, 0);
+            this.mainPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.mainPicture.Name = "mainPicture";
-            this.mainPicture.Size = new System.Drawing.Size(690, 513);
+            this.mainPicture.Size = new System.Drawing.Size(1381, 988);
             this.mainPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainPicture.TabIndex = 0;
             this.mainPicture.TabStop = false;
@@ -334,12 +346,13 @@
             // 
             // FaceRecognition
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 543);
+            this.ClientSize = new System.Drawing.Size(2264, 1044);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "FaceRecognition";
             this.Text = "Facial Recognition - Spencer Pollock";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FaceRecognition_Close);

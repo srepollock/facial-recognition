@@ -12,6 +12,7 @@
     using EigenFace;
     using System.Resources;
     using System.Linq;
+    using System.IO;
     public partial class FaceRecognition : Form
     {
         /* Variables */
@@ -49,12 +50,12 @@
         /// <summary>
         /// A threshold to check if we found the same face.
         /// </summary>
-        public const double SAME_FACE_THRESH = 7.7;
+        public const double SAME_FACE_THRESH = 7.8;
 
         /// <summary>
         /// Face threshold, check to see if the face is within a reasonable face space.
         /// </summary>
-        public const double FACE_THRESH = 20000;
+        public const double FACE_THRESH = 16000;
 
         /// <summary>
         /// Constants for the regular, difference and eigen values.
@@ -136,15 +137,15 @@
         public FaceRecognition()
         {
             InitializeComponent();
-            Bitmap bmp = Facial_Recognition.Properties.Resources.temp1;
+            //Bitmap bmp = Facial_Recognition.Properties.Resources.temp1;
             //// Student code
-            mainBmp = bmp; // load in the first from the user // need to get the file from the resource
+            mainBmp = (Bitmap)Image.FromFile("./imgLib/temp1.bmp"); // load in the first from the user // need to get the file from the resource
             mainPicture.Image = mainBmp;
-            //double[,] img = ImageTool.GetGreyScale(mainBmp);
-            double[,] img = ImageTool.GetArray(bmp);
+            double[,] img = ImageTool.GetGreyScale(mainBmp);
+            //double[,] img = ImageTool.GetArray(bmp);
             //ImageTool.SetImage(mainBmp, img);
-            //int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
-            int libCount = LoadLibrary(IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
+            int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
+            //int libCount = LoadLibrary(IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
             avg = ImageTool.GetAvg(lib);
             difLib = ImageTool.GetDifferenceArray(lib, avg);
             libBmp = new Bitmap(IMG_WIDTH, IMAGE_HEIGHT);
@@ -175,30 +176,31 @@
             CloseVideoSource();
         }
 
-        /// <summary>
-        /// Loads in the library for the faces
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="subSet"></param>
-        /// <returns></returns>
-        //public int LoadLibrary(string directory, int width, int height, int subSet)
-        //{
-        //    string[] images = Directory.GetFiles(@directory, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
-        //    if (subSet < 1)
-        //        subSet = 1;
-        //    lib = new double[images.Length][,];
-        //    int i = 0;
-        //    foreach (string image in images)
-        //    {
-        //        lib[i++] = ImageTool.GetArray(new Bitmap(image));
-        //    }
-        //    if (subSet > 1)
-        //        lib = ImageTool.avgSubsets(lib, subSet);
-        //    return images.Length / subSet;
-        //}
+        // <summary>
+        // Loads in the library for the faces
+        // </summary>
+        // <param name = "directory" ></ param >
+        // < param name="width"></param>
+        // <param name = "height" ></ param >
+        // < param name="subSet"></param>
+        // <returns></returns>
+        public int LoadLibrary(string directory, int width, int height, int subSet)
+        {
+            string[] images = Directory.GetFiles(@directory, "*.bmp"); // *.jpg || *.bmp (bmp for my lib)
+            if (subSet < 1)
+                subSet = 1;
+            lib = new double[images.Length][,];
+            int i = 0;
+            foreach (string image in images)
+            {
+                lib[i++] = ImageTool.GetArray(new Bitmap(image));
+            }
+            if (subSet > 1)
+                lib = ImageTool.avgSubsets(lib, subSet);
+            return images.Length / subSet;
+        }
 
+        // TODO Load the library from a user selected library. I want to be able to add images to the file specified, or to the resources. Maybe even add them all to an online test bank.
         /// <summary>
         /// Loads in the library for the faces
         /// </summary>
@@ -244,7 +246,6 @@
             }
             
         }
-
 
         // TOOL STRIP
 

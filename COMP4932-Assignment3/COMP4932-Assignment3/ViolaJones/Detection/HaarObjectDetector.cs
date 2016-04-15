@@ -330,13 +330,21 @@
 
         #endregion
 
+        // TODO This may throw errors elsewhere
         /// <summary>
         ///   Performs object detection on the given frame.
         /// </summary>
         /// 
         public Rectangle[] ProcessFrame(Bitmap frame)
         {
-            return ProcessFrame(UnmanagedImage.FromManagedImage(frame));
+            try
+            {
+                return ProcessFrame(UnmanagedImage.FromManagedImage(frame));
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         /// <summary>

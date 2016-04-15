@@ -56,7 +56,7 @@ When talking about library, I am stating that the image library of the faces mus
 When talking about Viola-Jones I am referencing the method of Viola-Jones.  
 [Wiki](https://en.wikipedia.org/wiki/Viola%E2%80%93Jones_object_detection_framework)
 [Slides-shortened](http://www.cs.ubc.ca/~lowe/425/slides/13-ViolaJones.pdf)
-# Eigen Faces
+## Eigen Faces
 The face finder method used is based on the paper found [here](https://en.wikipedia.org/wiki/Eigenface).  
 [EigenFaces paper](http://www.face-rec.org/algorithms/PCA/jcn.pdf)
 
