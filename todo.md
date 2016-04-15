@@ -33,4 +33,4 @@
             }  
             
     > What functions do I need to call here? What am I actually calculating?
-2. 
+2. Add a taskbar for when the process is being found

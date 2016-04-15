@@ -37,6 +37,7 @@ namespace COMP4932_Assignment3
         public const double FACE_THRESH = 16000;
         public const int REGULAR = 0, DIFFERENCE = 1, EIGEN = 2;
         public const int FACES_PER_PERSON = 3;
+        public const int IMG_WIDTH = 256, IMAGE_HEIGHT = 256;
         public double[][,] lib;
         public double[][,] difLib;
         public double[][,] eigFaces;
@@ -57,17 +58,15 @@ namespace COMP4932_Assignment3
             InitializeComponent();
             grayTicker.Tick += new System.EventHandler(gifGrayPlay);
             diffTicker.Tick += new System.EventHandler(gifDiffPlay);
-
             // Student code
-            ///*
             mainBmp = new Bitmap(Image.FromFile("./plane.bmp")); // load in the first from the user
             pictureBox1.Image = mainBmp;
             double[,] img = ImageTool.GetGreyScale(mainBmp);
             ImageTool.SetImage(mainBmp, img);
-            int libCount = LoadLibrary("./imgLib", mainBmp.Width, mainBmp.Height, FACES_PER_PERSON); // Loads the library with images that are the same size as the main bitmap
+            int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
             avg = ImageTool.GetAvg(lib);
             difLib = ImageTool.GetDifferenceArray(lib, avg);
-            libBmp = new Bitmap(mainBmp.Width, mainBmp.Height);
+            libBmp = new Bitmap(IMG_WIDTH, IMAGE_HEIGHT);
             EigenObject eigVects = ImageTool.GetEigen(ImageTool.GetA(lib));
             ImageTool.normalize(eigVects.Vectors);
             eigFaces = ImageTool.getEigenFaces(eigVects.Vectors, difLib);
@@ -83,7 +82,6 @@ namespace COMP4932_Assignment3
             ImageTool.normalize(recon, 255);
             ImageTool.SetImage(libBmp, lib[p]);
             avgFace.Image = libBmp;
-            //*/
         }
 
         /// <summary>
@@ -463,22 +461,15 @@ namespace COMP4932_Assignment3
         private void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap img = (Bitmap)eventArgs.Frame.Clone();
-            // Get the faces in the image as rects
-
-            // TODO Thread here
-
-            //rekt = objDet.ProcessFrame(img); // Gets the faces
-
             /*TESTING FOR THE FACE BOXES*/
-            //using (Graphics g = Graphics.FromImage(img))
-            //{
-            //    Color color = Color.FromArgb(255, Color.Red);
-            //    Pen brush = new Pen(color);
-            //    rekt = objDet.ProcessFrame(img);
-            //    if (rekt.Length > 0)
-            //        g.DrawRectangles(brush, rekt); // Draw the all the rectangles
-            //}
-
+            /*using (Graphics g = Graphics.FromImage(img))
+            {
+                Color color = Color.FromArgb(255, Color.Red);
+                Pen brush = new Pen(color);
+                rekt = objDet.ProcessFrame(img);
+                if (rekt.Length > 0)
+                    g.DrawRectangles(brush, rekt); // Draw the all the rectangles
+            }*/
             pictureBox1.Image = img;
         }
 
@@ -584,60 +575,6 @@ namespace COMP4932_Assignment3
                 Debug.WriteLine(trollception.ToString());
                 Debug.WriteLine("kappabilities of the image not found."); // Print something pretty troll
             }
-            /********************/
-
-            /************************************/
-            /*Getting the face from the 256 x 256*/ // function below
-            //Bitmap org = (Bitmap)pictureBox1.Image; // Take the current image in the picturebox
-            //double[,] orgAr = ImageTool.GetArray(org); // Get the array of the image, for differencing
-            // Already grayscale
-            //double[] w = ImageTool.getWeights(eigFaces, orgAr, avg); // Gets the weights of the current selected face. eigFaces and avg are setup from the library
-            //double[] compW = ImageTool.compareWeigths(libWeights, w); // Compare all the weights in the library with their images and the weights of the current image
-            //int p = ImageTool.smallestVal(comp); // Gets the face that has the smallest weight
-            /************************************/
-
-            //Bitmap org = (Bitmap)pictureBox1.Image;
-            //double[,] orgArray = ImageTool.GetArray(org); // Original image double array for comparrison
-            //double min = double.MaxValue;
-            //Rectangle ripp = new Rectangle();
-            //try {
-            //    rekt = processDatImage((Bitmap)pictureBox1.Image); // Starts a new task to get the pictures
-            //    if (rekt.Length > 0)
-            //    {
-            //        for(int i = 0; i < rekt.Length; i++)
-            //        {
-            //            double calcFaceSpace = ImageTool.difference(orgArray, );
-            //            if( calcFaceSpace < FACE_THRESH)
-            //            {
-            //                // we may have a face
-            //                if( calcFaceSpace < min)
-            //                {
-            //                    ripp = rekt[i];
-            //                    min = calcFaceSpace;
-            //                }
-            //            }
-            //        }
-            //        if (!ripp.IsEmpty) // if we did find at least one
-            //        {
-            //            // Get the rectangles position and save it
-            //            ripp.Inflate(20, 20);
-            //            //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
-            //            Bitmap img = org.Clone(ripp, org.PixelFormat);
-            //            Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
-            //            img = filter.Apply(img);
-            //            img = ImageTool.ResizeImage(img, 256, 256);
-            //            capFacePic.Image = img;
-            //            findFaceToolStripMenuItem1.Enabled = true;
-            //        }
-            //    }
-            //}catch(Exception kappa)
-            //{
-            //    Debug.WriteLine(kappa.ToString());
-            //    for (int i = 0; i < 11; i++)
-            //    {
-            //        Debug.WriteLine("kappabilities not found");
-            //    }
-            //}
         }
 
         /// <summary>
@@ -654,7 +591,6 @@ namespace COMP4932_Assignment3
             double[] weights = ImageTool.getWeights(eigFaces, img, avg);
             comp = ImageTool.compareWeigths(libWeights, weights);
             int p = ImageTool.smallestVal(comp);
-
             if (comp[p] > SAME_FACE_THRESH)
             {
                 lb_person.Text = "Person: Unknown";
@@ -664,8 +600,6 @@ namespace COMP4932_Assignment3
                 lb_person.Text = "Person: " + p;
             }
             recon = ImageTool.reconstruct(weights, eigFaces, avg);
-
-            //pb_lib.Image = libBmp;
             ImageTool.SetImage(libBmp, lib[p]);
             fndFacePic.Image = libBmp;
             lb_distance.Text = "Distance : " + comp[p];
@@ -673,7 +607,7 @@ namespace COMP4932_Assignment3
             lb_faceSpace.Text = "Face Space : " + faceSpace;
             if (faceSpace > FACE_THRESH)
             {
-                lb_faceSpace.Text += "\nNot a face";
+                lb_faceSpace.Text += "... Not a face";
             }
         }
     }
