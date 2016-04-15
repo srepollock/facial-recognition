@@ -22,7 +22,7 @@ namespace Facial_Recognition.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Facial_Recognition.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Facial_Recognition.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Facial_Recognition.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp1 {
+        internal static System.Drawing.Bitmap temp1 {
             get {
                 object obj = ResourceManager.GetObject("temp1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp10 {
+        internal static System.Drawing.Bitmap temp10 {
             get {
                 object obj = ResourceManager.GetObject("temp10", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp11 {
+        internal static System.Drawing.Bitmap temp11 {
             get {
                 object obj = ResourceManager.GetObject("temp11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp12 {
+        internal static System.Drawing.Bitmap temp12 {
             get {
                 object obj = ResourceManager.GetObject("temp12", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +103,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp13 {
+        internal static System.Drawing.Bitmap temp13 {
             get {
                 object obj = ResourceManager.GetObject("temp13", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +113,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp14 {
+        internal static System.Drawing.Bitmap temp14 {
             get {
                 object obj = ResourceManager.GetObject("temp14", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +123,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp15 {
+        internal static System.Drawing.Bitmap temp15 {
             get {
                 object obj = ResourceManager.GetObject("temp15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +133,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp16 {
+        internal static System.Drawing.Bitmap temp16 {
             get {
                 object obj = ResourceManager.GetObject("temp16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +143,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp17 {
+        internal static System.Drawing.Bitmap temp17 {
             get {
                 object obj = ResourceManager.GetObject("temp17", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +153,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp18 {
+        internal static System.Drawing.Bitmap temp18 {
             get {
                 object obj = ResourceManager.GetObject("temp18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +163,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp19 {
+        internal static System.Drawing.Bitmap temp19 {
             get {
                 object obj = ResourceManager.GetObject("temp19", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +173,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp2 {
+        internal static System.Drawing.Bitmap temp2 {
             get {
                 object obj = ResourceManager.GetObject("temp2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,7 +183,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp20 {
+        internal static System.Drawing.Bitmap temp20 {
             get {
                 object obj = ResourceManager.GetObject("temp20", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -193,7 +193,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp21 {
+        internal static System.Drawing.Bitmap temp21 {
             get {
                 object obj = ResourceManager.GetObject("temp21", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -203,7 +203,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp22 {
+        internal static System.Drawing.Bitmap temp22 {
             get {
                 object obj = ResourceManager.GetObject("temp22", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +213,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp23 {
+        internal static System.Drawing.Bitmap temp23 {
             get {
                 object obj = ResourceManager.GetObject("temp23", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,7 +223,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp24 {
+        internal static System.Drawing.Bitmap temp24 {
             get {
                 object obj = ResourceManager.GetObject("temp24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -233,7 +233,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp25 {
+        internal static System.Drawing.Bitmap temp25 {
             get {
                 object obj = ResourceManager.GetObject("temp25", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -243,7 +243,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp26 {
+        internal static System.Drawing.Bitmap temp26 {
             get {
                 object obj = ResourceManager.GetObject("temp26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -253,7 +253,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp27 {
+        internal static System.Drawing.Bitmap temp27 {
             get {
                 object obj = ResourceManager.GetObject("temp27", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -263,7 +263,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp3 {
+        internal static System.Drawing.Bitmap temp3 {
             get {
                 object obj = ResourceManager.GetObject("temp3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -273,7 +273,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp4 {
+        internal static System.Drawing.Bitmap temp4 {
             get {
                 object obj = ResourceManager.GetObject("temp4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -283,7 +283,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp5 {
+        internal static System.Drawing.Bitmap temp5 {
             get {
                 object obj = ResourceManager.GetObject("temp5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -293,7 +293,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp6 {
+        internal static System.Drawing.Bitmap temp6 {
             get {
                 object obj = ResourceManager.GetObject("temp6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -303,7 +303,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp7 {
+        internal static System.Drawing.Bitmap temp7 {
             get {
                 object obj = ResourceManager.GetObject("temp7", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -313,7 +313,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp8 {
+        internal static System.Drawing.Bitmap temp8 {
             get {
                 object obj = ResourceManager.GetObject("temp8", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -323,7 +323,7 @@ namespace Facial_Recognition.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap temp9 {
+        internal static System.Drawing.Bitmap temp9 {
             get {
                 object obj = ResourceManager.GetObject("temp9", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
