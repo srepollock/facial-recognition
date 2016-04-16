@@ -55,7 +55,7 @@
         /// <summary>
         /// Face threshold, check to see if the face is within a reasonable face space.
         /// </summary>
-        public const double FACE_THRESH = 16000;
+        public const double FACE_THRESH = 18000;
 
         /// <summary>
         /// Constants for the regular, difference and eigen values.
@@ -73,7 +73,7 @@
         /// <summary>
         /// Constants for the image width to pass into the previous student's code.
         /// </summary>
-        public const int IMG_WIDTH = 256, IMAGE_HEIGHT = 256;
+        public const int IMAGE_WIDTH = 256, IMAGE_HEIGHT = 256;
 
         /// <summary>
         /// Image library of faces. Determined by the value and a double array of the 'image' in double 2D array format.
@@ -144,11 +144,11 @@
             double[,] img = ImageTool.GetGreyScale(mainBmp);
             //double[,] img = ImageTool.GetArray(bmp);
             //ImageTool.SetImage(mainBmp, img);
-            int libCount = LoadLibrary("./imgLib", IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
+            int libCount = LoadLibrary("./imgLib", IMAGE_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
             //int libCount = LoadLibrary(IMG_WIDTH, IMAGE_HEIGHT, FACES_PER_PERSON);
             avg = ImageTool.GetAvg(lib);
             difLib = ImageTool.GetDifferenceArray(lib, avg);
-            libBmp = new Bitmap(IMG_WIDTH, IMAGE_HEIGHT);
+            libBmp = new Bitmap(IMAGE_WIDTH, IMAGE_HEIGHT);
             EigenObject eigVects = ImageTool.GetEigen(ImageTool.GetA(lib));
             ImageTool.normalize(eigVects.Vectors);
             eigFaces = ImageTool.getEigenFaces(eigVects.Vectors, difLib);
@@ -251,6 +251,7 @@
 
         // TODO Thread this function. Can take a long time on the UI for hi-res
         // TODO Update progress bar for the image
+
         /// <summary>
         /// 
         /// </summary>
@@ -274,7 +275,6 @@
                     {
                         // Get a copy of the image in the box
                         Rectangle rectTemp = rekt[i]; // Copy, we need to inflate the rectangle
-                        rectTemp.Inflate(4, 4); // Inflate a bit, we have to resize anyways
                         Bitmap temp = org.Clone(rectTemp, org.PixelFormat); // Get a copy of what is inside the box // may need to rescale
                         double[,] tempAr = ImageTool.GetArray(temp); // Change the temp bitmap into a double 2D array
                         // Already grayscaled
@@ -292,7 +292,7 @@
                     }
                     if (!ripp.IsEmpty) // We actually have one
                     {
-                        ripp.Inflate(20, 20);
+                        //ripp.Inflate(20, 20);
                         //Bitmap img = org.Clone(rekt[0], org.PixelFormat);
                         Bitmap img = org.Clone(ripp, org.PixelFormat);
                         Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);

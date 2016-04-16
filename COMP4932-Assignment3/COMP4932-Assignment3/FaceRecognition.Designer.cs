@@ -126,7 +126,7 @@
             this.tableLayoutPanel1.Controls.Add(this.mainPanel, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 44);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -142,7 +142,7 @@
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(6, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(332, 988);
             this.panel1.TabIndex = 0;
@@ -162,7 +162,7 @@
             // 
             this.start.Dock = System.Windows.Forms.DockStyle.Top;
             this.start.Location = new System.Drawing.Point(0, 118);
-            this.start.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.start.Margin = new System.Windows.Forms.Padding(6);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(332, 52);
             this.start.TabIndex = 4;
@@ -175,7 +175,7 @@
             this.comboBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(0, 85);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(332, 33);
             this.comboBox2.TabIndex = 2;
@@ -184,7 +184,7 @@
             // 
             this.refCamera.Dock = System.Windows.Forms.DockStyle.Top;
             this.refCamera.Location = new System.Drawing.Point(0, 33);
-            this.refCamera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.refCamera.Margin = new System.Windows.Forms.Padding(4);
             this.refCamera.Name = "refCamera";
             this.refCamera.Size = new System.Drawing.Size(332, 52);
             this.refCamera.TabIndex = 1;
@@ -197,7 +197,7 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(332, 33);
             this.comboBox1.TabIndex = 0;
@@ -215,7 +215,7 @@
             this.panel2.Controls.Add(this.capFaceLabel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(1743, 6);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(515, 988);
             this.panel2.TabIndex = 2;
@@ -235,7 +235,7 @@
             // 
             this.avgFace.Dock = System.Windows.Forms.DockStyle.Top;
             this.avgFace.Location = new System.Drawing.Point(0, 567);
-            this.avgFace.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.avgFace.Margin = new System.Windows.Forms.Padding(6);
             this.avgFace.Name = "avgFace";
             this.avgFace.Size = new System.Drawing.Size(515, 221);
             this.avgFace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -268,7 +268,7 @@
             // 
             this.fndFacePic.Dock = System.Windows.Forms.DockStyle.Top;
             this.fndFacePic.Location = new System.Drawing.Point(0, 296);
-            this.fndFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.fndFacePic.Margin = new System.Windows.Forms.Padding(6);
             this.fndFacePic.Name = "fndFacePic";
             this.fndFacePic.Size = new System.Drawing.Size(515, 221);
             this.fndFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -301,7 +301,7 @@
             // 
             this.capFacePic.Dock = System.Windows.Forms.DockStyle.Top;
             this.capFacePic.Location = new System.Drawing.Point(0, 25);
-            this.capFacePic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.capFacePic.Margin = new System.Windows.Forms.Padding(6);
             this.capFacePic.Name = "capFacePic";
             this.capFacePic.Size = new System.Drawing.Size(515, 221);
             this.capFacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -324,7 +324,7 @@
             this.mainPanel.Controls.Add(this.mainPicture);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(350, 6);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(6);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1381, 988);
             this.mainPanel.TabIndex = 3;
@@ -333,7 +333,7 @@
             // 
             this.mainPicture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPicture.Location = new System.Drawing.Point(0, 0);
-            this.mainPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.mainPicture.Margin = new System.Windows.Forms.Padding(6);
             this.mainPicture.Name = "mainPicture";
             this.mainPicture.Size = new System.Drawing.Size(1381, 988);
             this.mainPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -352,7 +352,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FaceRecognition";
             this.Text = "Facial Recognition - Spencer Pollock";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FaceRecognition_Close);
