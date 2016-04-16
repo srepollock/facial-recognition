@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace COMP4932_Assignment3.ViolaJones.Tools
+﻿namespace COMP4932_Assignment3.ViolaJones.Tools
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;

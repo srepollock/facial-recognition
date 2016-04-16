@@ -481,9 +481,9 @@
         /// <summary>
         /// Takes the average for each subset of the faces.
         /// </summary>
-        /// <param name="faces"></param>
-        /// <param name="setSize"></param>
-        /// <returns></returns>
+        /// <param name="faces">Faces in the library as a Double 2D array, in a double array.</param>
+        /// <param name="setSize">Number of images per set.</param>
+        /// <returns>Double 2D array, in a double 2D array of subsets.</returns>
         public static double[][,] avgSubsets(double[][,] faces, int setSize)
         {
             double[][,] result = new double[faces.Length / setSize][,];
